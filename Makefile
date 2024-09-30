@@ -4,3 +4,4 @@ all:
 	clang -c -o test.o test.c
 	clang -o calculator calculator.o functions.o test.o -lm
 
+nesto nesto
