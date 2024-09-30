@@ -31,7 +31,7 @@ bool exp_valid(char *str, char valid_char[])
     int i;
     for (i = 0; i < lenght; i++)
     {
-        if (isspace(str[i]))
+        if (isspace((unsigned char)str[i]))
         {
             return false;
         }
@@ -133,10 +133,10 @@ int calculate_exp(char *str)
     for (i = 0; i < lenght; i++)
     {
         //check and get numbers
-        if (isdigit(str[i]))
+        if (isdigit((unsigned char)str[i]))
         {
             number = number * 10 + (str[i] - '0');
-            if (i == lenght - 1 || !isdigit(str[i+1]))
+            if (i == lenght - 1 || !isdigit((unsigned char)str[i+1]))
             {
                 nizOperanada[operanda_counter] = number;
                 operanda_counter++;
