@@ -1,7 +1,34 @@
-all:
-	clang -c -o calculator.o calculator.c
-	clang -c -o functions.o functions.c
-	clang -c -o test.o test.c
-	clang -o calculator calculator.o functions.o test.o -lm
+#name compiler 
+CC = gcc
 
-nesto nesto
+
+#compiler flags to use
+CFLAGS = -Wall -g
+
+
+# name source files
+SRCS = calculator.c functions.c test.c
+
+#name header file
+HEADERS = functions.h
+
+#object files directory 
+OBJS = $(SRCS:.c=.o)
+
+
+# output executable
+TARGET = calculator
+
+
+#build program
+$(TARGET): $(SRCS) $(HEADERS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+
+##compile source files into object files
+%.o: %.c $(HEADERS)
+	$(CC) %(CFLAGS) -c $< -o $@
+
+
+#CLEAN THE BUILD FILES
+clean:
+	rm -f $(TARGET) $(OBJS)
