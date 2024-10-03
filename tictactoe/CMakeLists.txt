@@ -12,7 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 # Dodaj izvorne fajlove
 set(SOURCES
-    main.c  # Dodaj test.c ovde
+    kod.c  # Dodaj test.c ovde
 )
 
 # Kreiraj izvršni fajl pod imenom "calculator"

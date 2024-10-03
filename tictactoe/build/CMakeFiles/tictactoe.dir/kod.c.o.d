@@ -1,5 +1,5 @@
-CMakeFiles/tictactoe.dir/main.c.o: \
- /cygdrive/c/Users/sljuk/sources/tictactoe/main.c \
+CMakeFiles/tictactoe.dir/kod.c.o: \
+ /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/kod.c \
  /usr/lib/gcc/x86_64-pc-cygwin/12/include/stdbool.h /usr/include/stdio.h \
  /usr/include/_ansi.h /usr/include/newlib.h \
  /usr/include/_newlib_version.h /usr/include/sys/config.h \

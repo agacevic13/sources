@@ -1,1 +1,1 @@
-gcc  -Wall -Wextra -O2 -Wl,--enable-auto-import CMakeFiles/tictactoe.dir/main.c.o -o tictactoe.exe -Wl,--out-implib,libtictactoe.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+gcc  -Wall -Wextra -O2 -Wl,--enable-auto-import CMakeFiles/tictactoe.dir/kod.c.o -o tictactoe.exe -Wl,--out-implib,libtictactoe.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

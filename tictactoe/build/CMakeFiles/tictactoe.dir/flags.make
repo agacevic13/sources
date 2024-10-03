@@ -4,7 +4,7 @@
 # compile C with gcc
 C_DEFINES = 
 
-C_INCLUDES = -I/cygdrive/c/Users/sljuk/sources/tictactoe
+C_INCLUDES = -I/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe
 
 C_FLAGS =  -Wall -Wextra -O2
 

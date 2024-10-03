@@ -57,10 +57,10 @@ RM = /usr/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /cygdrive/c/Users/sljuk/sources/tictactoe
+CMAKE_SOURCE_DIR = /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /cygdrive/c/Users/sljuk/sources/tictactoe/build
+CMAKE_BINARY_DIR = /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/sljuk/sources/tictactoe/build/CMakeFiles /cygdrive/c/Users/sljuk/sources/tictactoe/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/sljuk/sources/tictactoe/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,29 +129,29 @@ tictactoe/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/build
 .PHONY : tictactoe/fast
 
-main.o: main.c.o
-.PHONY : main.o
+kod.o: kod.c.o
+.PHONY : kod.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/main.c.o
-.PHONY : main.c.o
+kod.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/kod.c.o
+.PHONY : kod.c.o
 
-main.i: main.c.i
-.PHONY : main.i
+kod.i: kod.c.i
+.PHONY : kod.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/main.c.i
-.PHONY : main.c.i
+kod.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/kod.c.i
+.PHONY : kod.c.i
 
-main.s: main.c.s
-.PHONY : main.s
+kod.s: kod.c.s
+.PHONY : kod.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/main.c.s
-.PHONY : main.c.s
+kod.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/kod.c.s
+.PHONY : kod.c.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... tictactoe"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... kod.o"
+	@echo "... kod.i"
+	@echo "... kod.s"
 .PHONY : help
 
 

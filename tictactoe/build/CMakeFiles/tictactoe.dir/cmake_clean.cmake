@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/tictactoe.dir/main.c.o"
-  "CMakeFiles/tictactoe.dir/main.c.o.d"
+  "CMakeFiles/tictactoe.dir/kod.c.o"
+  "CMakeFiles/tictactoe.dir/kod.c.o.d"
   "libtictactoe.dll.a"
   "tictactoe.exe"
   "tictactoe.pdb"
