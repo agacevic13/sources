@@ -106,5 +106,6 @@ int main(void)
 
     }
     free(str);
+    str=NULL;
 }
 

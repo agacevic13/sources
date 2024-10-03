@@ -93,7 +93,7 @@ int calculate_exp(char *str)
 
             int sub_result = calculate_exp(between);
             free(between);
-
+             between=NULL;
             // Zamena izraza unutar zagrada rezultatom
             char *new_str = calloc(50, sizeof(char));
             strncpy(new_str, str, open_index);
@@ -104,7 +104,7 @@ int calculate_exp(char *str)
 
             int final_result = calculate_exp(new_str);
             free(new_str);
-
+            new_str=NULL;
             return final_result;
         }
     }
