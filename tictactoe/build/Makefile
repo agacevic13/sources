@@ -129,29 +129,53 @@ tictactoe/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/build
 .PHONY : tictactoe/fast
 
-kod.o: kod.c.o
-.PHONY : kod.o
+cui.o: cui.c.o
+.PHONY : cui.o
 
 # target to build an object file
-kod.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/kod.c.o
-.PHONY : kod.c.o
+cui.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/cui.c.o
+.PHONY : cui.c.o
 
-kod.i: kod.c.i
-.PHONY : kod.i
+cui.i: cui.c.i
+.PHONY : cui.i
 
 # target to preprocess a source file
-kod.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/kod.c.i
-.PHONY : kod.c.i
+cui.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/cui.c.i
+.PHONY : cui.c.i
 
-kod.s: kod.c.s
-.PHONY : kod.s
+cui.s: cui.c.s
+.PHONY : cui.s
 
 # target to generate assembly for a file
-kod.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/kod.c.s
-.PHONY : kod.c.s
+cui.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/cui.c.s
+.PHONY : cui.c.s
+
+input.o: input.c.o
+.PHONY : input.o
+
+# target to build an object file
+input.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/input.c.o
+.PHONY : input.c.o
+
+input.i: input.c.i
+.PHONY : input.i
+
+# target to preprocess a source file
+input.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/input.c.i
+.PHONY : input.c.i
+
+input.s: input.c.s
+.PHONY : input.s
+
+# target to generate assembly for a file
+input.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/input.c.s
+.PHONY : input.c.s
 
 # Help Target
 help:
@@ -162,9 +186,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... tictactoe"
-	@echo "... kod.o"
-	@echo "... kod.i"
-	@echo "... kod.s"
+	@echo "... cui.o"
+	@echo "... cui.i"
+	@echo "... cui.s"
+	@echo "... input.o"
+	@echo "... input.i"
+	@echo "... input.s"
 .PHONY : help
 
 

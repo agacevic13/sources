@@ -8,7 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/kod.c" "CMakeFiles/tictactoe.dir/kod.c.o" "gcc" "CMakeFiles/tictactoe.dir/kod.c.o.d"
+  "/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/cui.c" "CMakeFiles/tictactoe.dir/cui.c.o" "gcc" "CMakeFiles/tictactoe.dir/cui.c.o.d"
+  "/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/input.c" "CMakeFiles/tictactoe.dir/input.c.o" "gcc" "CMakeFiles/tictactoe.dir/input.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

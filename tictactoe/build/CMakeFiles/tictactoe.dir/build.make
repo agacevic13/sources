@@ -69,31 +69,47 @@ include CMakeFiles/tictactoe.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/tictactoe.dir/flags.make
 
-CMakeFiles/tictactoe.dir/kod.c.o: CMakeFiles/tictactoe.dir/flags.make
-CMakeFiles/tictactoe.dir/kod.c.o: /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/kod.c
-CMakeFiles/tictactoe.dir/kod.c.o: CMakeFiles/tictactoe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/tictactoe.dir/kod.c.o"
-	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/tictactoe.dir/kod.c.o -MF CMakeFiles/tictactoe.dir/kod.c.o.d -o CMakeFiles/tictactoe.dir/kod.c.o -c /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/kod.c
+CMakeFiles/tictactoe.dir/input.c.o: CMakeFiles/tictactoe.dir/flags.make
+CMakeFiles/tictactoe.dir/input.c.o: /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/input.c
+CMakeFiles/tictactoe.dir/input.c.o: CMakeFiles/tictactoe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/tictactoe.dir/input.c.o"
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/tictactoe.dir/input.c.o -MF CMakeFiles/tictactoe.dir/input.c.o.d -o CMakeFiles/tictactoe.dir/input.c.o -c /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/input.c
 
-CMakeFiles/tictactoe.dir/kod.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/tictactoe.dir/kod.c.i"
-	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/kod.c > CMakeFiles/tictactoe.dir/kod.c.i
+CMakeFiles/tictactoe.dir/input.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/tictactoe.dir/input.c.i"
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/input.c > CMakeFiles/tictactoe.dir/input.c.i
 
-CMakeFiles/tictactoe.dir/kod.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/tictactoe.dir/kod.c.s"
-	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/kod.c -o CMakeFiles/tictactoe.dir/kod.c.s
+CMakeFiles/tictactoe.dir/input.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/tictactoe.dir/input.c.s"
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/input.c -o CMakeFiles/tictactoe.dir/input.c.s
+
+CMakeFiles/tictactoe.dir/cui.c.o: CMakeFiles/tictactoe.dir/flags.make
+CMakeFiles/tictactoe.dir/cui.c.o: /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/cui.c
+CMakeFiles/tictactoe.dir/cui.c.o: CMakeFiles/tictactoe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/tictactoe.dir/cui.c.o"
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/tictactoe.dir/cui.c.o -MF CMakeFiles/tictactoe.dir/cui.c.o.d -o CMakeFiles/tictactoe.dir/cui.c.o -c /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/cui.c
+
+CMakeFiles/tictactoe.dir/cui.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/tictactoe.dir/cui.c.i"
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/cui.c > CMakeFiles/tictactoe.dir/cui.c.i
+
+CMakeFiles/tictactoe.dir/cui.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/tictactoe.dir/cui.c.s"
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/cui.c -o CMakeFiles/tictactoe.dir/cui.c.s
 
 # Object files for target tictactoe
 tictactoe_OBJECTS = \
-"CMakeFiles/tictactoe.dir/kod.c.o"
+"CMakeFiles/tictactoe.dir/input.c.o" \
+"CMakeFiles/tictactoe.dir/cui.c.o"
 
 # External object files for target tictactoe
 tictactoe_EXTERNAL_OBJECTS =
 
-tictactoe.exe: CMakeFiles/tictactoe.dir/kod.c.o
+tictactoe.exe: CMakeFiles/tictactoe.dir/input.c.o
+tictactoe.exe: CMakeFiles/tictactoe.dir/cui.c.o
 tictactoe.exe: CMakeFiles/tictactoe.dir/build.make
 tictactoe.exe: CMakeFiles/tictactoe.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable tictactoe.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable tictactoe.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tictactoe.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

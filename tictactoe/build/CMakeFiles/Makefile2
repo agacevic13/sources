@@ -81,12 +81,12 @@ clean: CMakeFiles/tictactoe.dir/clean
 CMakeFiles/tictactoe.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tictactoe.dir/build.make CMakeFiles/tictactoe.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles --progress-num=1,2 "Built target tictactoe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles --progress-num=1,2,3 "Built target tictactoe"
 .PHONY : CMakeFiles/tictactoe.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/tictactoe.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tictactoe.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/Korisnik/Desktop/Calculator/sources/tictactoe/build/CMakeFiles 0
 .PHONY : CMakeFiles/tictactoe.dir/rule
