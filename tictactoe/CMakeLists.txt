@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Ime projekta
-project(SOURCES C)
+project(tictactoe C)
 
 # Postavi GCC kao kompajler
 set(CMAKE_C_COMPILER gcc)
@@ -12,9 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 # Dodaj izvorne fajlove
 set(SOURCES
-    calculator.c
-    functions.c
-    test.c  # Dodaj test.c ovde
+    main.c  # Dodaj test.c ovde
 )
 
 # Kreiraj izvršni fajl pod imenom "calculator"
