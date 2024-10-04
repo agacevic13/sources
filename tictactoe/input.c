@@ -115,12 +115,17 @@ void tictactoe(int whoseTurn)
                 {
                     declareWinner(whoseTurn);
                 }
+                else if (!emptyFields(board))
+                {
+                    printf("It's a tie!");
+                }
                 else
                 {
-                    continue;
+                    //continue;
+                    whoseTurn = PLAYER2;
                 }
             }
-            whoseTurn = PLAYER2;
+            //whoseTurn = PLAYER2;
         }
         else if (whoseTurn == PLAYER2)
         {
@@ -146,12 +151,16 @@ void tictactoe(int whoseTurn)
                 {
                     declareWinner(whoseTurn);
                 }
+                else if (!emptyFields(board))
+                {
+                    printf("It's a tie!");
+                }
                 else
                 {
-                    continue;
+                    whoseTurn = PLAYER1;
+                    //continue;
                 }
             }
-            whoseTurn = PLAYER1;
         }  
         //printf("It's a tie!");
     }
