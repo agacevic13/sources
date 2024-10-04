@@ -3,39 +3,40 @@
 
 #include "const.h"
 
-void show_board(char *[3]);
-  int rowCrossed(char board[SIDE][SIDE])
+void show_board(char board[SIDE][SIDE]);
+void instructions();
+int rowCrossed(char board[SIDE][SIDE])
+{
+    for(int i=0; i<SIDE;i++)
     {
-        for(int i=0; i<SIDE;i++)
-        {
-            if(board[i][0] == board[i][1] && board[i][1] == board[i][2])
-            {
-                return 1;
-            }
-        }
-        return 0;
-    }
-    int columnsCrossed(char board[][SIDE])
-    {
-        for(int i=0; i<SIDE;i++)
-        {
-            if(board[0][i] == board[1][i] && board[1][i] == board[2][i])
-            {
-                return 1;
-            }
-        }
-        return 0;
-    }
-    int diagonalsCrossed(char board[][SIDE])
-    {
-        if((board[0][0] == board[1][1] && board[1][1] == board[2][2]) || 
-            (board[0][2] == board[1][1] && board[1][1] == board[2][0]))
+        if(board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][2] != ' ')
         {
             return 1;
         }
-
-        return 0; 
     }
+    return 0;
+}
+int columnsCrossed(char board[SIDE][SIDE])
+{
+    for(int i=0; i<SIDE;i++)
+    {
+        if(board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[2][i] != ' ')
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+int diagonalsCrossed(char board[SIDE][SIDE])
+{
+    if((board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[2][2] != ' ') || 
+        (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[2][0] != ' '))
+    {
+        return 1;
+    }
+
+    return 0; 
+}
 
 
 bool emptyFields(char board[SIDE][SIDE])
@@ -51,7 +52,7 @@ bool emptyFields(char board[SIDE][SIDE])
     return false;
 }
 
-void declareWinner(whoseTurn)
+void declareWinner(int whoseTurn)
 {
     if (whoseTurn == PLAYER1)
     {
@@ -73,7 +74,7 @@ int gameWin(char board[SIDE][SIDE])
 void tictactoe(int whoseTurn)
 {
     char board[SIDE][SIDE];
-    int moves[SIDE * SIDE];
+    //int moves[SIDE * SIDE];
     int move = 0;
 
     instructions();
@@ -87,7 +88,7 @@ void tictactoe(int whoseTurn)
 
     }
 
-    while(!gameWin && emptyFields)
+    while(!gameWin(board) && emptyFields(board))
     {
         if (whoseTurn == PLAYER1)
         {
