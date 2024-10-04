@@ -12,9 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 # Dodaj izvorne fajlove
 set(SOURCES
-    input.c  # Dodaj test.c ovde
     cui.c
-    )
 
 # Kreiraj izvršni fajl pod imenom "calculator"
 add_executable(tictactoe ${SOURCES})
