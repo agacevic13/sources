@@ -25,6 +25,7 @@ int columnsCrossed(char board[SIDE][SIDE])
     }
     return 0;
 }
+
 int diagonalsCrossed(char board[SIDE][SIDE])
 {
     if((board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[2][2] != ' ') || 
@@ -35,7 +36,6 @@ int diagonalsCrossed(char board[SIDE][SIDE])
 
     return 0; 
 }
-
 
 bool emptyFields(char board[SIDE][SIDE])
 {
@@ -50,25 +50,23 @@ bool emptyFields(char board[SIDE][SIDE])
     return false;
 }
 
-void declareWinner(int whoseTurn)
+void declareWinner(int whoseTurn, int isComputer)
 {
-    if (whoseTurn == PLAYER1)
+    switch(whoseTurn)
     {
-        printf("Player 1 wins!");
+        case PLAYER1:
+            printf("Player 1 wins!\n");
+            break;
+        case PLAYER2:
+            if (whoseTurn == PLAYER2 && isComputer == COMPUTER1)
+            {
+                printf("Computer wins!\n");
+            }
+            else
+            {
+                printf("Player 2 wins!\n");
+            }
     }
-    else if (whoseTurn == PLAYER2)
-    {
-        printf("Player 2 wins!");
-    }
-    else if (whoseTurn == COMPUTER)
-    {
-        printf("Computer wins!");
-    }
-    else
-    {
-        printf("Player(YOU) win!");
-    }
-    
 }
 
 int gameWin(char board[SIDE][SIDE]) 
@@ -89,28 +87,16 @@ void tictactoe()
         scanf("%d", &turn);
         if(turn == 1)
         {
-            singlePlayer(1);
+            twoPlayers(2, 1);
         }
         else
         {
-            singlePlayer(2);
+            twoPlayers(1, 1);
         }
     }
     else if (players == 2)
     {
-            twoPlayers(1);
+            twoPlayers(1, 0);
     }
     
 }
-
-
-#ifdef TESTS
-void show_board(char board[SIDE][SIDE])
-{
-     
-}
-int main(void)
-{
-    tictactoe(0);
-}
-#endif

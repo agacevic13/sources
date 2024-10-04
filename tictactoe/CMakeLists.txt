@@ -16,6 +16,7 @@ set(SOURCES
     cui.c
     players.c
     iksoks.c
+    computer.c
    )
 # Kreiraj izvršni fajl pod imenom "calculator"
 add_executable(tictactoe ${SOURCES})

@@ -24,7 +24,7 @@ int computer_move(char board[SIDE][SIDE]){
    }
 
  while(1){
-     int move = rand()%(SIDE*SIDE);
+     int move = (rand()%(SIDE*SIDE))+1;
      if(is_empty(move, board)){
         return move;
      }
