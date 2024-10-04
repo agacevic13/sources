@@ -7,4 +7,13 @@
 #define PLAYER1_SYMBOL 'O' 
 #define PLAYER2_SYMBOL 'X'
 
+bool  is_empty(int move, char board[SIDE][SIDE]);
+int computer_move(char board[SIDE][SIDE]);
+
+
+
+
+
+
+
 #endif
