@@ -24,4 +24,13 @@ bool emptyFields(char board[SIDE][SIDE]);
 int gameWin(char board[SIDE][SIDE]);
 void tictactoe();
 
+bool  is_empty(int move, char board[SIDE][SIDE]);
+int computer_move(char board[SIDE][SIDE]);
+
+
+
+
+
+
+
 #endif
