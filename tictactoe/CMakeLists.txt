@@ -14,7 +14,9 @@ include_directories(${CMAKE_SOURCE_DIR})
 set(SOURCES
     input.c
     cui.c
-    )
+    players.c
+    iksoks.c
+   )
 # Kreiraj izvršni fajl pod imenom "calculator"
 add_executable(tictactoe ${SOURCES})
 

@@ -3,8 +3,6 @@
 
 #include "const.h"
 
-void show_board(char board[SIDE][SIDE]);
-void instructions();
 int rowCrossed(char board[SIDE][SIDE])
 {
     for(int i=0; i<SIDE;i++)
@@ -58,10 +56,19 @@ void declareWinner(int whoseTurn)
     {
         printf("Player 1 wins!");
     }
-    else
+    else if (whoseTurn == PLAYER2)
     {
         printf("Player 2 wins!");
     }
+    else if (whoseTurn == COMPUTER)
+    {
+        printf("Computer wins!");
+    }
+    else
+    {
+        printf("Player(YOU) win!");
+    }
+    
 }
 
 int gameWin(char board[SIDE][SIDE]) 
@@ -70,122 +77,40 @@ int gameWin(char board[SIDE][SIDE])
         
     }
 
-  
-void tictactoe(int whoseTurn)
+void tictactoe()
 {
-    char board[SIDE][SIDE];
-    //int moves[SIDE * SIDE];
-    int move = 0;
-
-    instructions();
-
-    for(int i=0; i<SIDE; i++)
+    int players = 0;
+    printf("How many players (1 or 2)?\n");
+    scanf("%d", &players);
+    if (players == 1)
     {
-        for(int j=0; j<SIDE; j++)
+        int turn = 0;
+        printf("Who do you want to start first (1 for computer or 2 for player)?\n");
+        scanf("%d", &turn);
+        if(turn == 1)
         {
-            board[i][j] = ' ';
+            singlePlayer(1);
         }
-
+        else
+        {
+            singlePlayer(2);
+        }
     }
-
-    while(!gameWin(board) && emptyFields(board))
+    else if (players == 2)
     {
-        if (whoseTurn == PLAYER1)
-        {
-            printf("Player 1, enter your move (1-9):");
-            scanf("%d", &move);
-            int row = (move - 1) / SIDE;
-            int column = (move - 1) % SIDE;
-
-            if (move < 1 || move > 9)
-            {
-                printf("Invalid input, please try again.\n");
-                continue;
-            }
-            else if (board[row][column] != ' ')
-            {
-                printf("Field already taked. Try another.");
-                continue; 
-            }
-            else
-            {
-                board[row][column] = PLAYER1_SYMBOL;
-                show_board(board);
-                if (gameWin(board))
-                {
-                    declareWinner(whoseTurn);
-                }
-                else if (!emptyFields(board))
-                {
-                    printf("It's a tie!");
-                }
-                else
-                {
-                    //continue;
-                    whoseTurn = PLAYER2;
-                }
-            }
-            //whoseTurn = PLAYER2;
-        }
-        else if (whoseTurn == PLAYER2)
-        {
-            printf("Player 2, enter your move (1-9):");
-            scanf("%d", &move);
-            int row = (move - 1) / SIDE;
-            int column = (move - 1) % SIDE;
-            if (move < 1 || move > 9)
-            {
-                printf("Invalid input, please try again.");
-                continue;
-            }
-            else if (board[row][column] != ' ')
-            {
-                printf("Field already taked. Try another.");
-                continue; 
-            }
-            else
-            {
-                board[row][column] = PLAYER2_SYMBOL;
-                show_board(board);
-                if (gameWin(board))
-                {
-                    declareWinner(whoseTurn);
-                }
-                else if (!emptyFields(board))
-                {
-                    printf("It's a tie!");
-                }
-                else
-                {
-                    whoseTurn = PLAYER1;
-                    //continue;
-                }
-            }
-        }  
-        //printf("It's a tie!");
+            twoPlayers(1);
     }
-  
+    
 }
 
-
-
-
-
-
-
-
-int main(void)
-{
-    tictactoe(1);
-}
 
 #ifdef TESTS
-void show_board(char *[3])
+void show_board(char board[SIDE][SIDE])
 {
      
 }
 int main(void)
 {
-    tictactoe(1);
+    tictactoe(0);
 }
 #endif
