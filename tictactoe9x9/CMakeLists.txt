@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Ime projekta
-project(tictactoe C)
+project(tictactoe9x9 C)
 
 # Postavi GCC kao kompajler
 set(CMAKE_C_COMPILER gcc)
@@ -13,13 +13,10 @@ include_directories(${CMAKE_SOURCE_DIR})
 # Dodaj izvorne fajlove
 set(SOURCES
     input.c
-    cui.c
-    players.c
-    iksoks.c
-    computer.c
+    ninexnine.c
    )
 # Kreiraj izvršni fajl pod imenom "calculator"
-add_executable(tictactoe ${SOURCES})
+add_executable(tictactoe9x9 ${SOURCES})
 
 # Specifične zastavice za GCC kompajler
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -O2")

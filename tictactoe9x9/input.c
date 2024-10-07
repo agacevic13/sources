@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include "constants.h"
 
-void initialization(struct smallBoard bigBoard[9]){
-   for(int i = 0; i <9; i++){
+struct smallBoard bigBoard[SIDE];
+void initialization(struct smallBoard bigBoard[SIDE]){
+   for(int i = 0; i <SIDE; i++){
     bigBoard[i].winner = ' ';
 
-    for(int j=0; j<9; i++){
-        for(int k=0; k<9; k++){
+    for(int j=0; j<INNER_SIZE; i++){
+        for(int k=0; k<INNER_SIZE; k++){
             bigBoard[i].board[j][k]= ' ';
 
         }

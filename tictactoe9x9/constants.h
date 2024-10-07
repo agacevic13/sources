@@ -2,6 +2,7 @@
 #define CONSTANTS_H_
 
 #include <stdbool.h>
+#include <stdio.h>
 
 
 #define PLAYER1 1 
@@ -17,14 +18,9 @@ struct smallBoard
     char winner;
     
 };
-struct smallBoard small;
-struct smallBoard bigBoard[SIDE];
 
-struct smallBoard bigBoard[9];
-void initialization(struct smallBoard bigBoard[9]);
-
-
-
-
+extern struct smallBoard bigBoard[SIDE];
+void initialization(struct smallBoard bigBoard[SIDE]);
+void print_bigBoard(struct smallBoard bigBoard[SIDE]);
 
 #endif

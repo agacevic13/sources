@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "constants.h"
 
-#define SIZE SIDE
 
 void instructions()
 {
@@ -11,37 +10,37 @@ void instructions()
     printf("\n");
 
 
-    for (int row = 0; row < SIZE; row++) {
+    for (int row = 0; row < SIDE; row++) {
         // For each row, display 3 inner boards horizontally
         for (int inner_row = 0; inner_row < INNER_SIZE; inner_row++) {
-            for (int col = 0; col < SIZE; col++) 
+            for (int col = 0; col < SIDE; col++) 
             {
                 // Print part of the inner board for each cell
                 printf("   |   |   ");
     
-                if (col < SIZE - 1) // Print column separator
+                if (col < SIDE - 1) // Print column separator
                     printf("|");
             }
             printf("\n");
 
             if (inner_row < INNER_SIZE - 1) 
             {
-                for (int col = 0; col < SIZE; col++) 
+                for (int col = 0; col < SIDE; col++) 
                 {
                     printf("-----------");
-                    if (col < SIZE - 1) // Print inner separator
+                    if (col < SIDE - 1) // Print inner separator
                         printf("|");
                 }
                 printf("\n");
             }
         }
 
-        if (row < SIZE - 1) 
+        if (row < SIDE - 1) 
         {
-            for (int col = 0; col < SIZE; col++) 
+            for (int col = 0; col < SIDE; col++) 
             {
                 printf("===========");
-                if (col < SIZE - 1)
+                if (col < SIDE - 1)
                     printf("=");
             }
             printf("\n");
