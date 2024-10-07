@@ -6,7 +6,7 @@
 
 #define PLAYER1 1 
 #define PLAYER2 2 
-#define SIDE 3 
+#define SIDE 9 
 #define INNER_SIZE 3
 
 //prototypes
@@ -17,8 +17,8 @@ struct smallBoard
     char winner;
     
 };
-
-struct smallBoard bigBoard[9];
+struct smallBoard small;
+struct smallBoard bigBoard[SIDE];
 
 
 
