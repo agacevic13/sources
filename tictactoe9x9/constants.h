@@ -11,7 +11,14 @@
 
 //prototypes
 void instructions();
+struct smallBoard
+{
+    char board[INNER_SIZE][INNER_SIZE]; 
+    char winner;
+    
+};
 
+struct smallBoard bigBoard[9];
 
 
 
