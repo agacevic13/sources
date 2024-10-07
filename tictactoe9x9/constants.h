@@ -19,7 +19,7 @@ struct smallBoard
 };
 
 struct smallBoard bigBoard[9];
-
+void initialization(struct smallBoard bigBoard[9]);
 
 
 
