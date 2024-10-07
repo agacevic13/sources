@@ -12,6 +12,7 @@
 #define PLAYER2_SYMBOL 'X'
 #define COMPUTER_SYMBOL 'X'
 #define COMPUTER1 1
+#define COMPUTER0 0
 
 //prototypes
 void show_board(char board[SIDE][SIDE]);

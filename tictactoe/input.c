@@ -87,16 +87,16 @@ void tictactoe()
         scanf("%d", &turn);
         if(turn == 1)
         {
-            twoPlayers(2, 1);
+            twoPlayers(PLAYER2, COMPUTER1);
         }
         else
         {
-            twoPlayers(1, 1);
+            twoPlayers(PLAYER1, COMPUTER1);
         }
     }
     else if (players == 2)
     {
-            twoPlayers(1, 0);
+            twoPlayers(PLAYER1, COMPUTER0);
     }
     
 }
