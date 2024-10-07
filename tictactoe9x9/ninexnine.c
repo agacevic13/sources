@@ -21,10 +21,17 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
 
 }
 
+#ifndef TEST
 int main(void)
 {
+    struct smallBoard bigBoard[SIDE];
+
+    TRACE;
     initialization(bigBoard);
+    TRACE;
     print_bigBoard(bigBoard);
+    TRACE;
 }
 
+#endif
 

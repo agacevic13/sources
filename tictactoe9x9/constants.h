@@ -4,6 +4,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#if 0
+#define TRACE printf("%s, #%d\n", __func__, __LINE__)
+#else
+#define TRACE
+#endif
+
 
 #define PLAYER1 1 
 #define PLAYER2 2 
