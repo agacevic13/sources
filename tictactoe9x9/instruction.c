@@ -50,7 +50,7 @@ void instructions()
 
 
 }
-
+#if 0
 void show_board(char board[SIZE][SIZE])
 {
    
@@ -58,7 +58,7 @@ void show_board(char board[SIZE][SIZE])
      printf("\n\t\t\t %d | %c | %c \t\t\t\n \t\t\t %c | %c | %c\t\t\t\n \t\t\t %c | %c | %c \t\t\t\n", board[0][0], board[0][1], board[0][2],board[1][0], board[1][1],board[1][2],board[2][0],board[2][1],board[2][2]);
    
 }
-
+#endif
 #ifdef TESTS
 int main(void)
 {

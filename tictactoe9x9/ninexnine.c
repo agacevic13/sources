@@ -1,4 +1,4 @@
-#include "const.h"
+#include "constants.h"
 
 struct smallBoard
 {
