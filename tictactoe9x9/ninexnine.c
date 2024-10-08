@@ -9,7 +9,7 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
             int s=0;
             for (int j =0; j< 9; j++)
             {
-                printf("%c", bigBoard[i].board[i][j%3]);
+                printf("%c", bigBoard[j / 3].board[i%3][j % 3]);
                 if (s <2)
                 {
                   printf("|"); 
@@ -29,7 +29,7 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
             int s=0;
             for (int j =0; j< 9; j++)
             {
-                    printf("%c", bigBoard[i].board[i-3][j%3]);
+                    printf("%c", bigBoard[3 + j / 3].board[(i-3)%3][j % 3]);
                     if (s <2)
                     {
                     printf("|"); 
@@ -47,9 +47,9 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
         for (int i = 6; i < 9; i++)
         {
             int s=0;
-            for (int j =0; j< 9; j++)
+            for (int j = 0; j< 9; j++)
             {
-                printf("%c", bigBoard[i].board[i-6][j%3]);
+                printf("%c", bigBoard[6 + j / 3].board[(i-6) % 3][j % 3]);
                 if (s <2)
                 {
                   printf("|"); 
@@ -76,6 +76,13 @@ int main(void)
     TRACE;
     initialization(bigBoard);
     TRACE;
+    bigBoard[0].board[0][0] = 'C';
+    bigBoard[0].board[1][0] = 'D';
+    bigBoard[1].board[1][0] = 'E';
+    bigBoard[1].board[2][2] = 'F';
+    bigBoard[2].board[2][2] = 'G';
+    bigBoard[4].board[2][2] = 'X';
+    bigBoard[8].board[2][2] = 'H';
     print_bigBoard(bigBoard);
     TRACE;
 }
