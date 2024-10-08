@@ -87,13 +87,15 @@ void convert(int whoseTurn)
             }
             else if (bigBoard[bigmove].board[row][column] != ' ')
             {
-                printf("Field already taked. Try another.");
+                printf("Field already taked. Try another.\n");
                 continue; 
             }
             else
             {
                 bigBoard[bigmove].board[row][column] = PLAYER1_SIMBOL;
                 print_bigBoard(bigBoard);
+                //check win
+                small_win(bigBoard, bigmove);
                 //next funkcija
                 next_table(bigBoard, smallmove);
                 whoseTurn = PLAYER2; 
@@ -109,7 +111,7 @@ void convert(int whoseTurn)
         }
         else if(whoseTurn == PLAYER2)
         {
-            printf("Player 2, input a number 1-9, where you want to place your symbol?");
+            printf("Player 2, input a number 1-9, where you want to place your symbol? ");
             scanf("%d",&smallmove);
             int row = (smallmove - 1) / INNER_SIZE;
             int column = (smallmove - 1) % INNER_SIZE;
@@ -120,13 +122,15 @@ void convert(int whoseTurn)
             }
             else if (bigBoard[bigmove].board[row][column] != ' ')
             {
-                printf("Field already taked. Try another.");
+                printf("Field already taked. Try another.\n");
                 continue; 
             }
             else
             {
                 bigBoard[bigmove].board[row][column] = PLAYER2_SIMBOL;
                 print_bigBoard(bigBoard);
+                //check win
+                small_win(bigBoard, bigmove);
                 //next funkcija
                 next_table(bigBoard, smallmove);
                 whoseTurn = PLAYER1;
@@ -148,11 +152,11 @@ void convert(int whoseTurn)
 int main(void)
 {
     instructions();
-    TRACE;
-    initialization(bigBoard);
-    TRACE;
+    // TRACE;
+     initialization(bigBoard);
+    // TRACE;
     convert(1);    
-    TRACE;
+    // TRACE;
 }
 
 #endif

@@ -34,5 +34,7 @@ void initialization(struct smallBoard bigBoard[SIDE]);
 void print_bigBoard(struct smallBoard bigBoard[SIDE]);
 void next_table(struct smallBoard bigBoard[SIDE], int next);
 void convert(int whoseTurn);
+void small_win(struct smallBoard bigBoard[SIDE], int table);
+bool emptyFields(struct smallBoard bigBoard[SIDE], int table);
 
 #endif

@@ -19,7 +19,18 @@ void initialization(struct smallBoard bigBoard[SIDE]){
         }
     }
 }
-
+bool emptyFields(struct smallBoard bigBoard[SIDE], int table)
+{
+    for (int i = 0; i<INNER_SIZE; i++)
+    {
+        for (int j=0;j<INNER_SIZE;j++)
+        {
+            if (bigBoard[table].board[i][j] == ' ')
+            return true;
+        }
+    }
+    return false;
+}
 
 void next_table(struct smallBoard bigBoard[SIDE], int next){
              
@@ -30,12 +41,28 @@ void next_table(struct smallBoard bigBoard[SIDE], int next){
          bigBoard[next-1].active = true;
          
           }
-          else{
-            printf("Next table is completed. Choose another!");
+          else if (bigBoard[next-1].winner == PLAYER1_SIMBOL || bigBoard[next-1].winner == PLAYER2_SIMBOL)
+          {
+            if(bigBoard[next-1].winner == PLAYER1_SIMBOL)
+            {
+                printf("Player 1 wins this small board!\n");
+            }
+            else
+            {
+            printf("Player 2 wins this small board!\n");
+
+            }
+            printf("Choose another:");
              scanf("%d", &next);
              next_table(bigBoard, next);
           }
-          printf("You are in small board %d.", next);
+          else
+          {
+            printf("It's a tie! Table is completed. Choose another!");
+             scanf("%d", &next);
+             next_table(bigBoard, next);
+          }
+          printf("You are in small board %d.\n", next);
 
 }
 
@@ -43,7 +70,7 @@ void next_table(struct smallBoard bigBoard[SIDE], int next){
 void small_win(struct smallBoard bigBoard[SIDE], int table){
      //checking rows
      for(int i=0; i<INNER_SIZE; i++){
-        if(bigBoard[table].board[i][0] == bigBoard[table].board[i][1] && bigBoard[table].board[i][1] == bigBoard[table].board[i][2] ){
+        if(bigBoard[table].board[i][0] == bigBoard[table].board[i][1] && bigBoard[table].board[i][1] == bigBoard[table].board[i][2] &&   bigBoard[table].board[i][2]!=' '){
         if(bigBoard[table].board[i][0] == PLAYER1_SIMBOL){
             bigBoard[table].winner = PLAYER1_SIMBOL;
         }
@@ -56,7 +83,7 @@ void small_win(struct smallBoard bigBoard[SIDE], int table){
      //checking columns
 
      for(int i=0; i<INNER_SIZE; i++){
-        if(bigBoard[table].board[0][i] == bigBoard[table].board[1][i] && bigBoard[table].board[1][i] == bigBoard[table].board[2][i] ){
+        if(bigBoard[table].board[0][i] == bigBoard[table].board[1][i] && bigBoard[table].board[1][i] == bigBoard[table].board[2][i] &&  bigBoard[table].board[2][i]!=' '){
             if(bigBoard[table].board[0][i] == PLAYER1_SIMBOL){
                 bigBoard[table].winner = PLAYER1_SIMBOL;
             }
@@ -68,7 +95,7 @@ void small_win(struct smallBoard bigBoard[SIDE], int table){
 
 
      //checking diagonals
-    if(bigBoard[table].board[1][1] == bigBoard[table].board[2][2] && bigBoard[table].board[2][2] == bigBoard[table].board[0][0]){
+    if(bigBoard[table].board[1][1] == bigBoard[table].board[2][2] && bigBoard[table].board[2][2] == bigBoard[table].board[0][0] && bigBoard[table].board[0][0]!=' '){
        if(bigBoard[table].board[0][0] == PLAYER1_SIMBOL){
                 bigBoard[table].winner = PLAYER1_SIMBOL;
             }
@@ -76,7 +103,7 @@ void small_win(struct smallBoard bigBoard[SIDE], int table){
                 bigBoard[table].winner = PLAYER2_SIMBOL;
             }
     }
-     if(bigBoard[table].board[0][2] == bigBoard[table].board[1][1] && bigBoard[table].board[2][0] == bigBoard[table].board[1][1]){
+     if(bigBoard[table].board[0][2] == bigBoard[table].board[1][1] && bigBoard[table].board[2][0] == bigBoard[table].board[1][1] && bigBoard[table].board[1][1]!=' '){
        if(bigBoard[table].board[1][1] == PLAYER1_SIMBOL){
                 bigBoard[table].winner = PLAYER1_SIMBOL;
             }
@@ -84,6 +111,10 @@ void small_win(struct smallBoard bigBoard[SIDE], int table){
                 bigBoard[table].winner = PLAYER2_SIMBOL;
             }
     }
+    // check tie
+        if(emptyFields(bigBoard, table) == false){
+            bigBoard[table].winner='/';
+        }
 }
 
 
