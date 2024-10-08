@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "constants.h"
 
+struct smallBoard bigBoard[SIDE];
+
 void initialization(struct smallBoard bigBoard[SIDE]){
     TRACE;
     for(int i = 0; i < SIDE; i++){
@@ -24,7 +26,7 @@ void next_table(struct smallBoard bigBoard[SIDE], int next){
            for(int i=0; i<SIDE; i++){
              bigBoard[i].active = false;
            }
-          if(bigBoard[next-1].winner!=' '){
+          if(bigBoard[next-1].winner ==' '){
          bigBoard[next-1].active = true;
          
           }
@@ -33,6 +35,7 @@ void next_table(struct smallBoard bigBoard[SIDE], int next){
              scanf("%d", &next);
              next_table(bigBoard, next);
           }
+          printf("You are in small board %d.", next);
 
 }
 

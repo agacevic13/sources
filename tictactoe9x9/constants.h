@@ -16,7 +16,7 @@
 #define SIDE 9 
 #define INNER_SIZE 3
 #define PLAYER1_SIMBOL 'X'
-#define PLAYER2_SIMBOL 'Y'
+#define PLAYER2_SIMBOL 'O'
 
 
 //prototypes
@@ -28,9 +28,11 @@ struct smallBoard
     bool active;
     
 };
-
+void instructions();
 extern struct smallBoard bigBoard[SIDE];
 void initialization(struct smallBoard bigBoard[SIDE]);
 void print_bigBoard(struct smallBoard bigBoard[SIDE]);
+void next_table(struct smallBoard bigBoard[SIDE], int next);
+void convert(int whoseTurn);
 
 #endif

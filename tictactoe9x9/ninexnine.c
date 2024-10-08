@@ -3,7 +3,6 @@
 
 void print_bigBoard(struct smallBoard bigBoard[SIDE])
 {
-   
         for (int i = 0; i < 3; i++)
         {
             int s=0;
@@ -65,25 +64,94 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
         //printf("\n");
         printf("\n\n");
     }
+#if 1
+void convert(int whoseTurn)
+{
+    int move;
+    int smallmove;
+    printf("Input a number 1-9 in which small board you want to start? ");
+    scanf("%d",&move);
+    int bigmove = move - 1;
+    while (1)
+    {
+        if (whoseTurn == PLAYER1)
+        {
+            printf("Player 1, input a number 1-9, where you want to place your symbol? ");
+            scanf("%d",&smallmove);
+            int row = (smallmove - 1) / INNER_SIZE;
+            int column = (smallmove - 1) % INNER_SIZE;
+            if (smallmove < 1 || smallmove > 9)
+            {
+                printf("Invalid input, please try again.\n");
+                continue;
+            }
+            else if (bigBoard[bigmove].board[row][column] != ' ')
+            {
+                printf("Field already taked. Try another.");
+                continue; 
+            }
+            else
+            {
+                bigBoard[bigmove].board[row][column] = PLAYER1_SIMBOL;
+                print_bigBoard(bigBoard);
+                //next funkcija
+                next_table(bigBoard, smallmove);
+                whoseTurn = PLAYER2; 
+                for (int i = 0; i < SIDE; i++)
+                {
+                    if (bigBoard[i].active == true)
+                    {
+                        bigmove = i;
+                    }
+                }
+            }
 
+        }
+        else if(whoseTurn == PLAYER2)
+        {
+            printf("Player 2, input a number 1-9, where you want to place your symbol?");
+            scanf("%d",&smallmove);
+            int row = (smallmove - 1) / INNER_SIZE;
+            int column = (smallmove - 1) % INNER_SIZE;
+            if (smallmove < 1 || smallmove > 9)
+            {
+                printf("Invalid input, please try again.\n");
+                continue;
+            }
+            else if (bigBoard[bigmove].board[row][column] != ' ')
+            {
+                printf("Field already taked. Try another.");
+                continue; 
+            }
+            else
+            {
+                bigBoard[bigmove].board[row][column] = PLAYER2_SIMBOL;
+                print_bigBoard(bigBoard);
+                //next funkcija
+                next_table(bigBoard, bigmove);
+                whoseTurn = PLAYER1;
+                for (int i = 0; i < SIDE; i++)
+                {
+                    if (bigBoard[i].active == true)
+                    {
+                        bigmove = i;
+                    }
+                }
+            }
+        }
 
+    }
+}
 
+#endif
 #ifndef TEST
 int main(void)
 {
-    struct smallBoard bigBoard[SIDE];
-
+    instructions();
     TRACE;
     initialization(bigBoard);
     TRACE;
-    bigBoard[0].board[0][0] = 'C';
-    bigBoard[0].board[1][0] = 'D';
-    bigBoard[1].board[1][0] = 'E';
-    bigBoard[1].board[2][2] = 'F';
-    bigBoard[2].board[2][2] = 'G';
-    bigBoard[4].board[2][2] = 'X';
-    bigBoard[8].board[2][2] = 'H';
-    print_bigBoard(bigBoard);
+    convert(1);    
     TRACE;
 }
 
