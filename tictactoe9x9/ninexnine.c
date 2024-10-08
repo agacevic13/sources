@@ -72,7 +72,7 @@ void convert(int whoseTurn)
     printf("Input a number 1-9 in which small board you want to start? ");
     scanf("%d",&move);
     int bigmove = move -1;
-    while (1)
+    while (bigWinner(bigBoard) == false)
     {
         if (whoseTurn == PLAYER1)
         {
@@ -96,15 +96,35 @@ void convert(int whoseTurn)
                 print_bigBoard(bigBoard);
                 //check win
                 small_win(bigBoard, bigmove);
-                //next funkcija
-                next_table(bigBoard, smallmove);
-                whoseTurn = PLAYER2; 
-                for (int i = 0; i < SIDE; i++)
+                if (bigWinner(bigBoard) == true)
                 {
-                    if (bigBoard[i].active == true)
+                    //printf("%c", whoIsWinner(bigBoard));
+                    char win = whoIsWinner(bigBoard);
+                    if(win == 'X')
                     {
-                        bigmove = i;
+                        printf("PLAYER 1 WINS!");
                     }
+                    else if (win == 'O')
+                    {
+                        printf("PLAYER 2 WINS!");
+                    }
+                    else{
+                        printf("IT'S A TIE!");
+                    }
+                }
+                else
+                {
+                    next_table(bigBoard, smallmove);
+                    whoseTurn = PLAYER2; 
+                    for (int i = 0; i < SIDE; i++)
+                    {
+                        if (bigBoard[i].active == true)
+                        {
+                            bigmove = i;
+                        }
+                    
+                    }
+                
                 }
             }
 
@@ -131,15 +151,35 @@ void convert(int whoseTurn)
                 print_bigBoard(bigBoard);
                 //check win
                 small_win(bigBoard, bigmove);
-                //next funkcija
-                next_table(bigBoard, smallmove);
-                whoseTurn = PLAYER1;
-                for (int i = 0; i < SIDE; i++)
+                if (bigWinner(bigBoard) == true)
                 {
-                    if (bigBoard[i].active == true)
+                    //("%c", whoIsWinner(bigBoard));
+                    char win = whoIsWinner(bigBoard);
+                    if(win == 'X')
                     {
-                        bigmove = i;
+                        printf("PLAYER 1 WINS!");
                     }
+                    else if (win == 'O')
+                    {
+                        printf("PLAYER 2 WINS!");
+                    }
+                    else{
+                        printf("IT'S A TIE!");
+                    }
+                }
+                else
+                {
+                    next_table(bigBoard, smallmove);
+                    whoseTurn = PLAYER1; 
+                    for (int i = 0; i < SIDE; i++)
+                    {
+                        if (bigBoard[i].active == true)
+                        {
+                            bigmove = i;
+                        }
+                    
+                    }
+                
                 }
             }
         }
@@ -157,6 +197,7 @@ int main(void)
     // TRACE;
     convert(1);    
     // TRACE;
+
 }
 
 #endif

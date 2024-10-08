@@ -36,5 +36,7 @@ void next_table(struct smallBoard bigBoard[SIDE], int next);
 void convert(int whoseTurn);
 void small_win(struct smallBoard bigBoard[SIDE], int table);
 bool emptyFields(struct smallBoard bigBoard[SIDE], int table);
+bool bigWinner(struct smallBoard bigBoard[SIDE]);
+char whoIsWinner(struct smallBoard bigBoard[SIDE]);
 
 #endif

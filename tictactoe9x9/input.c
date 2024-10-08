@@ -58,11 +58,11 @@ void next_table(struct smallBoard bigBoard[SIDE], int next){
           }
           else
           {
-            printf("It's a tie! Table is completed. Choose another!");
+            printf("It's a tie! Table is completed. Choose another:");
              scanf("%d", &next);
              next_table(bigBoard, next);
           }
-          printf("You are in small board %d.\n", next);
+        printf("You are in small board %d.\n", next);
 
 }
 
