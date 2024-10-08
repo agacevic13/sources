@@ -71,7 +71,7 @@ void convert(int whoseTurn)
     int smallmove;
     printf("Input a number 1-9 in which small board you want to start? ");
     scanf("%d",&move);
-    int bigmove = move - 1;
+    int bigmove = move -1;
     while (1)
     {
         if (whoseTurn == PLAYER1)
@@ -128,7 +128,7 @@ void convert(int whoseTurn)
                 bigBoard[bigmove].board[row][column] = PLAYER2_SIMBOL;
                 print_bigBoard(bigBoard);
                 //next funkcija
-                next_table(bigBoard, bigmove);
+                next_table(bigBoard, smallmove);
                 whoseTurn = PLAYER1;
                 for (int i = 0; i < SIDE; i++)
                 {
