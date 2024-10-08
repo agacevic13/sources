@@ -15,6 +15,9 @@
 #define PLAYER2 2 
 #define SIDE 9 
 #define INNER_SIZE 3
+#define PLAYER1_SIMBOL 'X'
+#define PLAYER2_SIMBOL 'Y'
+
 
 //prototypes
 void instructions();
@@ -22,6 +25,7 @@ struct smallBoard
 {
     char board[INNER_SIZE][INNER_SIZE]; 
     char winner;
+    bool active;
     
 };
 
