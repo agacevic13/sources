@@ -54,6 +54,36 @@ void small_win(struct smallBoard bigBoard[SIDE], int table){
      }
 
      //checking columns
+
+     for(int i=0; i<INNER_SIZE; i++){
+        if(bigBoard[table].board[0][i] == bigBoard[table].board[1][i] && bigBoard[table].board[1][i] == bigBoard[table].board[2][i] ){
+            if(bigBoard[table].board[0][i] == PLAYER1_SIMBOL){
+                bigBoard[table].winner = PLAYER1_SIMBOL;
+            }
+            else {
+                bigBoard[table].winner = PLAYER2_SIMBOL;
+            }
+        }
+     }
+
+
+     //checking diagonals
+    if(bigBoard[table].board[1][1] == bigBoard[table].board[2][2] && bigBoard[table].board[2][2] == bigBoard[table].board[0][0]){
+       if(bigBoard[table].board[0][0] == PLAYER1_SIMBOL){
+                bigBoard[table].winner = PLAYER1_SIMBOL;
+            }
+            else {
+                bigBoard[table].winner = PLAYER2_SIMBOL;
+            }
+    }
+     if(bigBoard[table].board[0][2] == bigBoard[table].board[1][1] && bigBoard[table].board[2][0] == bigBoard[table].board[1][1]){
+       if(bigBoard[table].board[1][1] == PLAYER1_SIMBOL){
+                bigBoard[table].winner = PLAYER1_SIMBOL;
+            }
+            else {
+                bigBoard[table].winner = PLAYER2_SIMBOL;
+            }
+    }
 }
 
 
