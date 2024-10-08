@@ -117,6 +117,64 @@ void small_win(struct smallBoard bigBoard[SIDE], int table){
         }
 }
 
+bool bigWinner(struct smallBoard bigBoard[SIDE] ){
+      for(int i=0; i<INNER_SIZE*INNER_SIZE; i+=INNER_SIZE){
+        
+        if(bigBoard[i].winner==bigBoard[i+1].winner && bigBoard[i+1].winner==bigBoard[i+2].winner && bigBoard[i+2].winner != ' '){
+            return true;
+        }
+      }
+      //check columns
+    for(int i=0; i<INNER_SIZE; i++){
+        if(bigBoard[i].winner==bigBoard[i+3].winner && bigBoard[i+3].winner==bigBoard[i+6].winner && bigBoard[i].winner != ' '){
+            return true;
+        }
+    }
+
+    //diagonals
+
+    if(bigBoard[0].winner==bigBoard[4].winner && bigBoard[4].winner==bigBoard[8].winner && bigBoard[4].winner!=' '){
+        return true;
+
+    }
+
+    if(bigBoard[2].winner==bigBoard[4].winner && bigBoard[4].winner==bigBoard[6].winner && bigBoard[4].winner!=' '){
+        return true;
+
+    }
+      return false;
+
+
+}
+
+
+char whoIsWinner(struct smallBoard bigBoard[SIDE]){
+    for(int i=0; i<INNER_SIZE*INNER_SIZE; i+=INNER_SIZE){
+        
+        if(bigBoard[i].winner==bigBoard[i+1].winner && bigBoard[i+1].winner==bigBoard[i+2].winner && bigBoard[i+2].winner != ' '){
+            return bigBoard[i].winner;
+        }
+      }
+      //check columns
+    for(int i=0; i<INNER_SIZE; i++){
+        if(bigBoard[i].winner==bigBoard[i+3].winner && bigBoard[i+3].winner==bigBoard[i+6].winner && bigBoard[i].winner != ' '){
+            return bigBoard[i].winner;
+        }
+    }
+
+    //diagonals
+
+    if(bigBoard[0].winner==bigBoard[4].winner && bigBoard[4].winner==bigBoard[8].winner && bigBoard[4].winner!=' '){
+        return bigBoard[0].winner;
+
+    }
+
+    if(bigBoard[2].winner==bigBoard[4].winner && bigBoard[4].winner==bigBoard[6].winner && bigBoard[4].winner!=' '){
+        return bigBoard[2].winner;
+
+    }
+      return '/';
+}
 
 
 #ifdef TEST 
