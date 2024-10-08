@@ -9,7 +9,7 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
             int s=0;
             for (int j =0; j< 9; j++)
             {
-                printf("%c", bigBoard[j / 3].board[i%3][j % 3]);
+                printf("%c", bigBoard[j / 3].board[i][j % 3]);
                 if (s <2)
                 {
                   printf("|"); 
@@ -29,7 +29,7 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
             int s=0;
             for (int j =0; j< 9; j++)
             {
-                    printf("%c", bigBoard[3 + j / 3].board[(i-3)%3][j % 3]);
+                    printf("%c", bigBoard[3 + j / 3].board[i-3][j % 3]);
                     if (s <2)
                     {
                     printf("|"); 
@@ -49,7 +49,7 @@ void print_bigBoard(struct smallBoard bigBoard[SIDE])
             int s=0;
             for (int j = 0; j< 9; j++)
             {
-                printf("%c", bigBoard[6 + j / 3].board[(i-6) % 3][j % 3]);
+                printf("%c", bigBoard[6 + j / 3].board[i-6][j % 3]);
                 if (s <2)
                 {
                   printf("|"); 
