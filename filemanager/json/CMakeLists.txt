@@ -14,7 +14,6 @@ include_directories(${CMAKE_SOURCE_DIR})
 set(SOURCES
     cJSON.c
     main.c
-    parttwo.c
     # Dodaj test.c ovde
 )
 
