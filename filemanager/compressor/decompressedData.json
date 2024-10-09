@@ -1,0 +1,14 @@
+{
+    "title": "Data Compression",
+    "description": "This JSON file contains information about data compression techniques.",
+    "techniques": [
+        "Huffman Coding",
+        "Run-Length Encoding",
+        "Deflate",
+        "Lempel-Ziv-Welch"
+    ],
+    "examples": {
+        "image": "compression.png",
+        "text": "text.txt"
+    }
+}
