@@ -2,26 +2,28 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Ime projekta
-project(json C)
+project(filemanager C)
 
 # Postavi GCC kao kompajler
-set(CMAKE_C_COMPILER gcc)
+#set(CMAKE_C_COMPILER gcc)
 
 # Uključi sve zaglavne fajlove iz trenutnog direktorijuma
-include_directories(${CMAKE_json_DIR})
+include_directories(${CMAKE_filemanager_DIR})
 
+#dodaj subdirectories
 add_subdirectory(compressor)
-# Dodaj izvorne fajlove
-set(json
-    cJSON.c
-    main.c
-    # Dodaj test.c ovde
+#add_subdirectory(json)
+
+set(EXECUTABLE_SOURCES
+    json/main.c
+    json/cjson.c
 )
 
-# Kreiraj izvršni fajl pod imenom "calculator"
-add_executable(json ${json})
+add_executable(my_executable ${EXECUTABLE_SOURCES})
 
-target_link_libraries(json PRIVATE compressor_lib)
+target_link_libraries(my_executable PRIVATE compressor_lib)
+# Kreiraj izvršni fajl pod imenom "calculator"
+#add_executable(filemanager ${SOURCES})
 
 # Specifične zastavice za GCC kompajler
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -O2")

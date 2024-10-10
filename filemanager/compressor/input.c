@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 
+
 void Load(char* filename, uint8* pOutBuff,uLong uncomp_len)   //arg: 
 {
      
@@ -66,6 +67,7 @@ void Save(char* filename, const uint8* pDataToSave)   //arg:filename with data t
     printf("Compressed from %lu to %lu bytes\n", src_len, cmp_len);
 }
 
+#if 0
 int main() {
 
    char* filename = "test.json";
@@ -86,3 +88,4 @@ int main() {
 
  
 }
+#endif

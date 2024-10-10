@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "cJSON.h"
 #include <windows.h>
+#include "../compressor/input.h"
 
 //char niz[100];
 //memcpy(niz, "aslda", strlen("aslda"));
