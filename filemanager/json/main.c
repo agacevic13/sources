@@ -21,6 +21,11 @@ cJSON *sensors = NULL;
 void initSD(void) {
     simulation = cJSON_CreateObject();   //object
     sensors = cJSON_CreateArray();       //array
+    char *buffer = calloc(1000, sizeof(char));
+    Load("sensor.json", buffer, 1000);
+    //cJSON *sensors = cJSON_Parse(buffer);
+    //buffer -> sensors;
+
     cJSON_AddItemToObject(simulation, "sensors", sensors);  // add array to object
     //cJSON *sensor = cJSON_CreateObject();   // new object for sensor
     //cJSON_AddItemToArray(sensors, sensor);  // add sensor object to the sensors array
@@ -56,10 +61,11 @@ void sendSensorData(const struct sensorData* const sd)
     cJSON_AddNumberToObject(newsensor, "temp", sd->temp);
 }
 
-void printSensorData() 
+void saveSensorData() 
 {
     char *jsonString = cJSON_Print(simulation);  
     printf("%s\n", jsonString);  
+    Save("sensor.json", jsonString);
     cJSON_free(jsonString); 
 }
 
@@ -96,7 +102,7 @@ int main()
         }
     }
 
-    printSensorData();  
+    saveSensorData();  
     cJSON_Delete(simulation);  
     return 0;
 }
