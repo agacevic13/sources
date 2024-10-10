@@ -1,134 +1,102 @@
-#include <stdio.h> 
-#include "cJSON.h"
 
-struct sensorData
-{
+#include <stdio.h>
+#include <stdlib.h>
+#include "cJSON.h"
+#include <windows.h>
+
+//char niz[100];
+//memcpy(niz, "aslda", strlen("aslda"));
+
+struct sensorData {
     int ID;
     char *room;
     int temp;
 };
+
 struct sensorData mySD;
 
 cJSON *simulation = NULL;
 cJSON *sensors = NULL;
-cJSON *sensor = NULL;
-cJSON *ID = NULL;
-cJSON *room = NULL;
-cJSON *temp = NULL;
 
-void initSD(void)
-{
-    sensors = cJSON_CreateObject();
-}
-
-void sendSensorData(const struct sensorData* const sd)
-{
-    cJSON *simulation =cJSON_CreateObject();
-
-    sensors =cJSON_CreateArray();
-    cJSON_AddItemToObject(simulation, "sensors", sensors);
-    
-    sensor = cJSON_CreateObject();
-    cJSON_AddItemToArray(sensors, sensor);
-    ID = cJSON_CreateNumber(sd->ID);
-    cJSON_AddItemToObject(sensor, "ID", ID);
-
-    room = cJSON_CreateString(sd->room);
-    cJSON_AddItemToObject(sensor, "room", room);
-
-    temp = cJSON_CreateNumber(sd->temp);
-    cJSON_AddItemToObject(sensor, "temp", temp);
-
-    
-    char *jsonString = cJSON_Print(simulation);
-    printf("%s\n", jsonString);
+void initSD(void) {
+    simulation = cJSON_CreateObject();   //object
+    sensors = cJSON_CreateArray();       //array
+    cJSON_AddItemToObject(simulation, "sensors", sensors);  // add array to object
+    //cJSON *sensor = cJSON_CreateObject();   // new object for sensor
+    //cJSON_AddItemToArray(sensors, sensor);  // add sensor object to the sensors array
 
 }
 
-#if 0
-void writeSensorData()
+void updateSensor(cJSON *sensor,struct sensorData* sd)
 {
-    FILE *fp = fopen("sensorData.json", "w");
-    if(fp == NULL)
+    cJSON_ReplaceItemInObject(sensor, "room", cJSON_CreateString(sd->room));
+    cJSON_ReplaceItemInObject(sensor, "temp", cJSON_CreateNumber(sd->temp));
+}
+
+void sendSensorData(const struct sensorData* const sd) 
+{
+    cJSON *sensor = NULL;
+    //cJSON *sensor = cJSON_CreateObject();   // new object for sensor
+    //cJSON_AddItemToArray(sensors, sensor);
+
+    cJSON_ArrayForEach(sensor, sensors)
     {
-        printf("Error: Unable to open file.\n");
-        return 1;
+        if (cJSON_GetObjectItem(sensor, "ID")->valueint == sd->ID)
+        {
+            updateSensor(sensor, (struct sensorData *)sd);
+            return;
+        }
     }
 
-    
-    fputs(jsonString, fp);
-    fclose;
+    cJSON *newsensor = cJSON_CreateObject();   // new object for sensor
+    cJSON_AddItemToArray(sensors, newsensor);  // add sensor object to the sensors array
 
+    cJSON_AddNumberToObject(newsensor, "ID", sd->ID);
+    cJSON_AddStringToObject(newsensor, "room", sd->room);
+    cJSON_AddNumberToObject(newsensor, "temp", sd->temp);
 }
-#endif
 
-
-#include <windows.h>
-
-int main()
+void printSensorData() 
 {
-    initSD();
-    
+    char *jsonString = cJSON_Print(simulation);  
+    printf("%s\n", jsonString);  
+    cJSON_free(jsonString); 
+}
+
+int main() 
+{
+    initSD();  
+
     mySD.ID = 1;
-    mySD.room = "Kitchen";
+    mySD.room = malloc(100 * sizeof(char));
+    memcpy(mySD.room, "Kitchen", strlen("Kitchen"));
     mySD.temp = 23;
 
     while(1)
-    {
+    {  
         sendSensorData(&mySD);
+        //printSensorData();
+
         mySD.ID++;
-        Sleep(1000); // ms
-        if (mySD.ID == 3)
+        Sleep(1000); // 1000 ms = 1 second
+
+        if (mySD.ID == 3) 
         {
             mySD.ID = 1;
-            mySD.temp+=3;
-            
+            //mySD.temp++;
         }
-        if(mySD.ID == 2)
+        if (mySD.ID == 2) 
         {
             mySD.room = "Bedroom";
-            mySD.temp ++;
+            mySD.temp++;
         }
-        if (mySD.temp > 30) 
+        if(mySD.temp == 26)
         {
             break;
         }
-        
-#if 0
-        if(mySD.ID == 1)
-        {
-            
-        }
-#endif
-            
     }
+
+    printSensorData();  
+    cJSON_Delete(simulation);  
+    return 0;
 }
-
-
-
-#if 0
-int createfile() { 
-// create a cJSON object 
-cJSON *json = cJSON_CreateObject(); 
-cJSON_AddStringToObject(json, "name", "John Doe"); 
-cJSON_AddNumberToObject(json, "age", 30); 
-cJSON_AddStringToObject(json, "email", "john.doe@example.com"); 
-
-// convert the cJSON object to a JSON string 
-char *json_str = cJSON_Print(json); 
-
-// write the JSON string to a file 
-FILE *fp = fopen("data.json", "w"); 
-if (fp == NULL) { 
-	printf("Error: Unable to open the file.\n"); 
-	return 1; 
-} 
-printf("%s\n", json_str); 
-fputs(json_str, fp); 
-fclose(fp);
-// free the JSON string and cJSON object 
-cJSON_free(json_str); 
-cJSON_Delete(json); 
-return 0; 
-}
-#endif
