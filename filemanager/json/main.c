@@ -27,8 +27,7 @@ void initSD(void) {
     //buffer -> sensors;
 
     cJSON_AddItemToObject(simulation, "sensors", sensors);  // add array to object
-    //cJSON *sensor = cJSON_CreateObject();   // new object for sensor
-    //cJSON_AddItemToArray(sensors, sensor);  // add sensor object to the sensors array
+
 
 }
 
