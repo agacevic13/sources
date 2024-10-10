@@ -12,18 +12,18 @@ include_directories(${CMAKE_filemanager_DIR})
 
 #dodaj subdirectories
 add_subdirectory(compressor)
-#add_subdirectory(json)
+add_subdirectory(json)
 
 set(EXECUTABLE_SOURCES
-    json/main.c
-    json/cjson.c
+    main.c
+    
 )
 
-add_executable(my_executable ${EXECUTABLE_SOURCES})
+add_executable(file_manager ${EXECUTABLE_SOURCES})
 
-target_link_libraries(my_executable PRIVATE compressor_lib)
-# Kreiraj izvršni fajl pod imenom "calculator"
-#add_executable(filemanager ${SOURCES})
+target_link_libraries(file_manager PRIVATE compressor_lib)
+target_link_libraries(file_manager PRIVATE json_lib)
+
 
 # Specifične zastavice za GCC kompajler
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -O2")

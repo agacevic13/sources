@@ -10,18 +10,15 @@ set(CMAKE_C_COMPILER gcc)
 # Uključi sve zaglavne fajlove iz trenutnog direktorijuma
 include_directories(${CMAKE_json_DIR})
 
-add_subdirectory(compressor)
 # Dodaj izvorne fajlove
 set(json
     cJSON.c
-    main.c
     # Dodaj test.c ovde
 )
 
-# Kreiraj izvršni fajl pod imenom "calculator"
-add_executable(json ${json})
+add_library(json_lib STATIC ${json})
 
-target_link_libraries(json PRIVATE compressor_lib)
+target_link_libraries(json_lib PRIVATE ${CMAKE_CURRENT_json_DIR})
 
 # Specifične zastavice za GCC kompajler
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -O2")

@@ -19,9 +19,6 @@ set(compressor
     # Dodaj test.c ovde
 )
 
-# Kreiraj izvršni fajl pod imenom "calculator"
-#add_executable(miniz ${SOURCES})
-
 add_library(compressor_lib STATIC ${compressor})
 target_include_directories(compressor_lib PUBLIC ${CMAKE_CURRENT_compressor_DIR})
 
