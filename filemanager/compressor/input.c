@@ -8,8 +8,12 @@ typedef unsigned int uint;
 
 void Load(char* filename, uint8* pOutBuff,uLong uncomp_len)   //arg: 
 {
-    
+     
       FILE* file = fopen(filename, "rb");
+      if(file==NULL){
+        printf("Unable to open the file.");
+        return;
+      }
      fseek(file, 0, SEEK_END);
    long  file_size = ftell(file);  // Dobij veličinu fajla u bajtovima
     rewind(file);             // Vrati pokazivač na početak fajla
@@ -80,7 +84,7 @@ int main() {
     uLong src_len = (uLong)strlen(s_pStr);
     uint8 *pUncomp = (uint8 *)malloc(src_len); //memorija za dekompresovane podatke 
     Save(filename, s_pStr);
-    Load(filename, pUncomp, src_len);
+    Load(filename, pUncomp, src_len * 10);
     printf("Decompressed data:\n%s\n", pUncomp);
 
  
