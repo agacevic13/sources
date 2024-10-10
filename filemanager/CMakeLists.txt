@@ -4,11 +4,6 @@ cmake_minimum_required(VERSION 3.10)
 # Ime projekta
 project(filemanager C)
 
-# Postavi GCC kao kompajler
-#set(CMAKE_C_COMPILER gcc)
-
-# Uključi sve zaglavne fajlove iz trenutnog direktorijuma
-include_directories(${CMAKE_filemanager_DIR})
 
 #dodaj subdirectories
 add_subdirectory(compressor)
