@@ -1,10 +1,8 @@
 #include <stdio.h>
-#include "miniz.h"
+#include "input.h"
 #include <stdlib.h>
 
-typedef unsigned char uint8;
-typedef unsigned short uint16;
-typedef unsigned int uint;
+
 
 void Load(char* filename, uint8* pOutBuff,uLong uncomp_len)   //arg: 
 {
@@ -69,6 +67,7 @@ void Save(char* filename, const uint8* pDataToSave)   //arg:filename with data t
     printf("Compressed from %lu to %lu bytes\n", src_len, cmp_len);
 }
 
+#if 0
 int main() {
 
    char* filename = "test.json";
@@ -89,3 +88,4 @@ int main() {
 
  
 }
+#endif
