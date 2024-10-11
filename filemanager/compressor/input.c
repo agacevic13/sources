@@ -9,7 +9,7 @@ void Load(char* filename, uint8* pOutBuff,uLong uncomp_len)   //arg:
      
       FILE* file = fopen(filename, "rb");
       if(file==NULL){
-        printf("Unable to open the file.");
+        printf("Unable to open the file.\n");
         return;
       }
      fseek(file, 0, SEEK_END);
