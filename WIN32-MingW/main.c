@@ -588,6 +588,7 @@ static uint32_t prvKeyboardInterruptHandler( void )
  * FreeRTOS simulator. This thread passes data into the simulator using
  * an integer.
  */
+int _getch();
 static DWORD WINAPI prvWindowsKeyboardInputThread( void * pvParam )
 {
     ( void ) pvParam;
