@@ -320,7 +320,7 @@
 	<variableList>
 		<variable>
 			<name>FREERTOS_ROOT</name>
-			<value>$%7BPARENT-3-PROJECT_LOC%7D</value>
+			<value>$%7BPARENT-3-PROJECT_LOC%7D/FreeRTOS/FreeRTOSplus2022/FreeRTOS-202212.01</value>
 		</variable>
 	</variableList>
 </projectDescription>

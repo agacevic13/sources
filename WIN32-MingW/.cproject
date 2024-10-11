@@ -141,12 +141,6 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="RTOSDemo.cdt.managedbuild.target.gnu.mingw.exe.393672054" name="Executable" projectType="cdt.managedbuild.target.gnu.mingw.exe"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.396692239;cdt.managedbuild.config.gnu.mingw.exe.debug.396692239.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1285167012;cdt.managedbuild.tool.gnu.c.compiler.input.974248912">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Debug_CodeCoverage"/>
@@ -156,4 +150,13 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.396692239;cdt.managedbuild.config.gnu.mingw.exe.debug.396692239.;cdt.managedbuild.tool.gnu.c.compiler.cygwin.base.666719722;cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.1925272589">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.396692239;cdt.managedbuild.config.gnu.mingw.exe.debug.396692239.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1285167012;cdt.managedbuild.tool.gnu.c.compiler.input.974248912">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
 </cproject>
