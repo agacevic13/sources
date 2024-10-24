@@ -10,12 +10,17 @@
 
 
 //freertos high resolution timer example
+//cale
+int LED1_PIN = 13;
+int LED2_PIN = 15;
+int LED3_PIN = 17;
 
 void timer_callback(void * args)
 {
+    // int pin = *((int *)args);
     static bool on;
     on = !on;
-    gpio_set_level(GPIO_NUM_4, on);
+    gpio_set_level(pin, on);
 }
 
 void app_main(void)
@@ -25,11 +30,19 @@ void app_main(void)
         const esp_timer_create_args_t esp_timer_create_args = 
         {
             .callback = timer_callback,
-            .name = "my timer"
+            .name = "my timer",
+            .arg = &LED1_PIN
         };
         esp_timer_handle_t esp_timer_handle;
         esp_timer_create(&esp_timer_create_args, &esp_timer_handle);
         esp_timer_start_periodic(esp_timer_handle, 50);
+
+        const esp_timer_create_args_t esp_timer_create_args = 
+        {
+            .callback = timer_callback,
+            .name = "my timer",
+            .arg = &LED2_PIN
+        };
 
         int x = 0;
         while(true)
