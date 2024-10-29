@@ -1,2 +1,2 @@
-idf_component_register(SRCS "frertoss.c"
-                    INCLUDE_DIRS ".")
+idf_component_register(SRCS  "wifi_init.c"
+                    INCLUDE_DIRS "." "components/wifi_connect")
