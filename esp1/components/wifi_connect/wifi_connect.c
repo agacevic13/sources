@@ -30,7 +30,7 @@ void event_handler(void* event_handler_arg, esp_event_base_t event_base,
     case WIFI_EVENT_STA_DISCONNECTED:
     {
         wifi_event_sta_disconnected_t *wifi_event_sta_disconnected = event_data;
-        ESP_LOGI(TAG, "DISCONNECTED %d: %s", wifi_event_sta_disconnected->reason, get_wifi_disconnection_string(wifi_event_sta_disconnected->reason));
+        ESP_LOGW(TAG, "DISCONNECTED %d: %s", wifi_event_sta_disconnected->reason, get_wifi_disconnection_string(wifi_event_sta_disconnected->reason));
         xEventGroupSetBits(wifi_events, DISCONNECTED);
         break;
     }
