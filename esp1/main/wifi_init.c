@@ -6,6 +6,6 @@
 void app_main(void){
      nvs_flash_init();
      wifi_connect_init();
-    // esp_err_t err = wifi_connect_sta("mreza2", "internet", 10000);
+    esp_err_t err = wifi_connect_sta("mreza2", "internet2", 10000);
 
 }
