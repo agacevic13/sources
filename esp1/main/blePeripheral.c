@@ -38,7 +38,7 @@ static uint8_t ext_adv_pattern_1[] = {
 };
 #endif
 
-static const char *tag = "NimBLE_BLE_PRPH";
+static const char *tag = "ANICA_BLE_PRPH";
 static int bleprph_gap_event(struct ble_gap_event *event, void *arg);
 #if CONFIG_EXAMPLE_RANDOM_ADDR
 static uint8_t own_addr_type = BLE_OWN_ADDR_RANDOM;
