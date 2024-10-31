@@ -9,16 +9,23 @@
 #include "services/gatt/ble_svc_gatt.h"
 #include "services/ans/ble_svc_ans.h"
 
-
+#define BATTER_SERVICE 0x180F
+#define BATTERY_LEVEL 0x2A19
 #define DEVICE_NAME "MY BLE DEVICE Anica"
-//#define DEVICE_INFO_SERVICE 0x180A
-#define GATT_SVR_SVC_ALERT_UUID     0x1811
+#define DEVICE_INFO_SERVICE 0x180A
+//#define GATT_SVR_SVC_ALERT_UUID     0x1811
 #define MANUFACTORER_NAME           0x2A29
 
 uint8_t ble_addr_type;
 void ble_app_advertise();
 void ble_svc_ans_init(void);
 
+static int battery_read(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
+{
+    uint8_t battery_level = 85;
+    os_mbuf_append(ctxt->om, &battery_level, sizeof(battery_level));
+    return 0;
+}
 static int device_info(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
     os_mbuf_append(ctxt->om, "manufactorer name", strlen("manufactorer name"));
@@ -35,7 +42,7 @@ static const struct ble_gatt_svc_def gat_svcs[] =
 {
     {
         .type = BLE_GATT_SVC_TYPE_PRIMARY,
-        .uuid = BLE_UUID16_DECLARE(GATT_SVR_SVC_ALERT_UUID),
+        .uuid = BLE_UUID16_DECLARE(DEVICE_INFO_SERVICE),
         .characteristics =(struct ble_gatt_chr_def[])
         {
             {
@@ -48,6 +55,21 @@ static const struct ble_gatt_svc_def gat_svcs[] =
                                         0x66, 0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff),
                 .flags = BLE_GATT_CHR_F_WRITE,
                 .access_cb = device_write
+            },
+            {
+                0
+            }
+        },
+    },
+    {
+        .type = BLE_GATT_SVC_TYPE_PRIMARY,
+        .uuid = BLE_UUID16_DECLARE(BATTER_SERVICE),
+        .characteristics =(struct ble_gatt_chr_def[])
+        {
+            {
+                .uuid = BLE_UUID16_DECLARE(BATTERY_LEVEL),
+                .flags = BLE_GATT_CHR_F_READ,
+                .access_cb = battery_read
             },
             {
                 0
@@ -100,7 +122,7 @@ void ble_app_advertise(void)
     fields.name_len = strlen(ble_svc_gap_device_name());
     fields.name_is_complete = 1;
     fields.uuids16 = (ble_uuid16_t[]) {
-        BLE_UUID16_INIT(GATT_SVR_SVC_ALERT_UUID)
+        BLE_UUID16_INIT(DEVICE_INFO_SERVICE)
     };
     fields.num_uuids16 = 1;
     fields.uuids16_is_complete = 1;
@@ -142,7 +164,7 @@ void app_main(void)
     ble_svc_gap_device_name_set(DEVICE_NAME);
     ble_svc_gap_init();
     ble_svc_gatt_init();
-    ble_svc_ans_init();
+    //ble_svc_ans_init();  //za blecent example from esp-idf
     ble_gatts_count_cfg(gat_svcs);
     ble_gatts_add_svcs(gat_svcs);
     
