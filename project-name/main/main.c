@@ -49,10 +49,14 @@
 #endif
 
 /*** The UUID of the service containing the subscribable characterstic ***/
-static const ble_uuid_t * remote_svc_uuid = BLE_UUID16_DECLARE(0x180a);
+static const ble_uuid_t * remote_svc_uuid =
+    BLE_UUID128_DECLARE(0x2d, 0x71, 0xa2, 0x59, 0xb4, 0x58, 0xc8, 0x12,
+                     	0x99, 0x99, 0x43, 0x95, 0x12, 0x2f, 0x46, 0x59);
 
 /*** The UUID of the subscribable chatacteristic ***/
-static const ble_uuid_t * remote_chr_uuid = BLE_UUID16_DECLARE(0x2a29);
+static const ble_uuid_t * remote_chr_uuid =
+    BLE_UUID128_DECLARE(0x00, 0x00, 0x00, 0x00, 0x11, 0x11, 0x11, 0x11,
+                     	0x22, 0x22, 0x22, 0x22, 0x33, 0x33, 0x33, 0x33);
 
 static const char *tag = "NimBLE_BLE_CENT";
 static int blecent_gap_event(struct ble_gap_event *event, void *arg);
@@ -71,7 +75,6 @@ blecent_on_custom_read(uint16_t conn_handle,
                        struct ble_gatt_attr *attr,
                        void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
     MODLOG_DFLT(INFO,
                 "Read complete for the subscribable characteristic; "
                 "status=%d conn_handle=%d", error->status, conn_handle);
@@ -96,7 +99,6 @@ blecent_on_custom_write(uint16_t conn_handle,
                         struct ble_gatt_attr *attr,
                         void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
     const struct peer_chr *chr;
     const struct peer *peer;
     int rc;
@@ -142,7 +144,6 @@ blecent_on_custom_subscribe(uint16_t conn_handle,
                             struct ble_gatt_attr *attr,
                             void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
     const struct peer_chr *chr;
     uint8_t value;
     int rc;
@@ -193,7 +194,6 @@ err:
 static void
 blecent_custom_gatt_operations(const struct peer* peer)
 {
-    ESP_LOGE(tag, "%s", __func__);
     const struct peer_dsc *dsc;
     int rc;
     uint8_t value[2];
@@ -235,7 +235,6 @@ blecent_on_subscribe(uint16_t conn_handle,
                      struct ble_gatt_attr *attr,
                      void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
     struct peer *peer;
 
     MODLOG_DFLT(INFO, "Subscribe complete; status=%d conn_handle=%d "
@@ -263,7 +262,6 @@ blecent_on_write(uint16_t conn_handle,
                  struct ble_gatt_attr *attr,
                  void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
     MODLOG_DFLT(INFO,
                 "Write complete; status=%d conn_handle=%d attr_handle=%d\n",
                 error->status, conn_handle, attr->handle);
@@ -313,7 +311,6 @@ blecent_on_read(uint16_t conn_handle,
                 struct ble_gatt_attr *attr,
                 void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
     MODLOG_DFLT(INFO, "Read complete; status=%d conn_handle=%d", error->status,
                 conn_handle);
     if (error->status == 0) {
@@ -370,7 +367,6 @@ err:
 static void
 blecent_read_write_subscribe(const struct peer *peer)
 {
-    ESP_LOGE(tag, "%s", __func__);
     const struct peer_chr *chr;
     int rc;
 
@@ -404,7 +400,7 @@ err:
 static void
 blecent_on_disc_complete(const struct peer *peer, int status, void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
+
     if (status != 0) {
         /* Service discovery failed.  Terminate the connection. */
         MODLOG_DFLT(ERROR, "Error: Service discovery failed; status=%d "
@@ -432,7 +428,6 @@ blecent_on_disc_complete(const struct peer *peer, int status, void *arg)
 static void
 blecent_scan(void)
 {
-    ESP_LOGE(tag, "%s", __func__);
     uint8_t own_addr_type;
     struct ble_gap_disc_params disc_params;
     int rc;
@@ -530,14 +525,9 @@ ext_blecent_should_connect(const struct ble_gap_ext_disc_desc *disc)
     return 0;
 }
 #else
-static void print_addr(uint8_t * addr)
-{
-    ESP_LOGW(tag, "%s: %02x:%02x:%02x:%02x:%02x:%02x", __func__, addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
-}
 static int
 blecent_should_connect(const struct ble_gap_disc_desc *disc)
 {
-    print_addr(disc->addr.val);
     struct ble_hs_adv_fields fields;
     int rc;
     int i;
@@ -548,13 +538,12 @@ blecent_should_connect(const struct ble_gap_disc_desc *disc)
     /* The device has to be advertising connectability. */
     if (disc->event_type != BLE_HCI_ADV_RPT_EVTYPE_ADV_IND &&
             disc->event_type != BLE_HCI_ADV_RPT_EVTYPE_DIR_IND) {
-        ESP_LOGE(tag, "%s, %d", __func__, __LINE__);
+
         return 0;
     }
 
     rc = ble_hs_adv_parse_fields(&fields, disc->data, disc->length_data);
     if (rc != 0) {
-        ESP_LOGE(tag, "%s, %d", __func__, __LINE__);
         return 0;
     }
 
@@ -572,7 +561,6 @@ blecent_should_connect(const struct ble_gap_disc_desc *disc)
         peer_addr[0] = TEST_CI_ADDRESS_CHIP_OFFSET;
 #endif // !CONFIG_EXAMPLE_USE_CI_ADDRESS
         if (memcmp(peer_addr, disc->addr.val, sizeof(disc->addr.val)) != 0) {
-            ESP_LOGE(tag, "%s, %d", __func__, __LINE__);
             return 0;
         }
     }
@@ -580,9 +568,7 @@ blecent_should_connect(const struct ble_gap_disc_desc *disc)
     /* The device has to advertise support for the Alert Notification
      * service (0x1811).
      */
-    ESP_LOGE(tag, "%s, %d", __func__, __LINE__);
     for (i = 0; i < fields.num_uuids16; i++) {
-        ESP_LOGE(tag, "%s, %d", __func__, __LINE__);
         if (ble_uuid_u16(&fields.uuids16[i].u) == BLECENT_SVC_ALERT_UUID) {
             return 1;
         }
@@ -593,25 +579,24 @@ blecent_should_connect(const struct ble_gap_disc_desc *disc)
 #endif
 
 /**
- * 
-    if (!ext_blecent_should_connect((struct ble_gap_ext_disc_desc *)disc)) {
-        return;Connects to the sender of the specified advertisement of it looks
+ * Connects to the sender of the specified advertisement of it looks
  * interesting.  A device is "interesting" if it advertises connectability and
  * support for the Alert Notification service.
  */
 static void
-blecent_connect_if_interesting(struct ble_gap_disc_desc *disc)
+blecent_connect_if_interesting(void *disc)
 {
-    ESP_LOGE(tag, "%s", __func__);
     uint8_t own_addr_type;
     int rc;
     ble_addr_t *addr;
 
     /* Don't do anything if we don't care about this advertiser. */
 #if CONFIG_EXAMPLE_EXTENDED_ADV
+    if (!ext_blecent_should_connect((struct ble_gap_ext_disc_desc *)disc)) {
+        return;
     }
 #else
-    if (!blecent_should_connect(disc)) {
+    if (!blecent_should_connect((struct ble_gap_disc_desc *)disc)) {
         return;
     }
 #endif
@@ -685,7 +670,6 @@ static void blecent_power_control(uint16_t conn_handle)
 static int
 blecent_gap_event(struct ble_gap_event *event, void *arg)
 {
-    ESP_LOGE(tag, "%s", __func__);
     struct ble_gap_conn_desc desc;
     struct ble_hs_adv_fields fields;
 #if MYNEWT_VAL(BLE_HCI_VS)
@@ -892,14 +876,12 @@ blecent_gap_event(struct ble_gap_event *event, void *arg)
 static void
 blecent_on_reset(int reason)
 {
-    ESP_LOGE(tag, "%s", __func__);
     MODLOG_DFLT(ERROR, "Resetting state; reason=%d\n", reason);
 }
 
 static void
 blecent_on_sync(void)
 {
-    ESP_LOGE(tag, "%s", __func__);
     int rc;
 
     /* Make sure we have proper identity address set (public preferred) */
