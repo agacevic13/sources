@@ -1,2 +1,2 @@
-idf_component_register(SRCS "wifiInit.c"
+idf_component_register(SRCS "bleGap.c"
                     INCLUDE_DIRS ".")

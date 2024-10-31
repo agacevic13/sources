@@ -7,7 +7,8 @@
 #include "host/ble_hs.h"
 #include "services/gap/ble_svc_gap.h"
 
-#define DEVICE_NAME "MY BLE DEVICE"
+
+#define DEVICE_NAME "MY BLE DEVICE Anica"
 
 uint8_t ble_addr_type;
 void ble_app_advertise();
@@ -68,6 +69,7 @@ void ble_app_advertise(void)
 void ble_app_on_sync(void)
 {
     ble_hs_id_infer_auto(0, &ble_addr_type);
+    //ble_addr_type = BLE_OWN_ADDR_PUBLIC;
     ble_app_advertise();
    
 }
@@ -82,7 +84,7 @@ void app_main(void)
 {
     nvs_flash_init();
 
-    esp_nimble_hci_init();
+    //esp_nimble_hci_init();
     nimble_port_init();
 
     ble_svc_gap_device_name_set(DEVICE_NAME);
