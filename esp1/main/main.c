@@ -12,6 +12,9 @@
 #define DEVICE_NAME "Maja BLE DEVICE"
 #define DEVICE_INFO_SERVICE 0x180A
 #define MANUFACTURER_NAME 0x2A29
+#define BATTERY_SERVICE 0X180F
+#define BATTERY_LEVEL_CHAR 0x2A19
+
 uint8_t ble_addr_type;
 void ble_app_advertise();
 
@@ -25,6 +28,13 @@ static int device_info(uint16_t cann_handle, uint16_t attr_handle,
   os_mbuf_append(ctxt->om, "Manufacturer name", strlen("Manufacturer name"));
   return 0;
 }
+static int battery_read(uint16_t cann_handle, uint16_t attr_handle,
+                       struct ble_gatt_access_ctxt *ctxt, void *arg) {
+  uint8_t battery_level = 85;
+  os_mbuf_append(ctxt->om, &battery_level, sizeof(battery_level));
+  return 0;
+}
+
 
 static const struct ble_gatt_svc_def gat_svcs[] = {
     {
@@ -41,6 +51,19 @@ static const struct ble_gatt_svc_def gat_svcs[] = {
                                              0xcc, 0xdd, 0xee, 0xff),
                  .flags = BLE_GATT_CHR_F_WRITE,
                  .access_cb = device_write},
+                {0}}
+
+    },
+     {
+
+        .type = BLE_GATT_SVC_TYPE_PRIMARY,
+        .uuid = BLE_UUID16_DECLARE(BATTERY_SERVICE),
+        .characteristics =
+            (struct ble_gatt_chr_def[]){
+                {.uuid = BLE_UUID16_DECLARE(BATTERY_LEVEL_CHAR),
+                 .flags = BLE_GATT_CHR_F_READ,
+                 .access_cb = battery_read},
+
                 {0}}
 
     },
