@@ -13,6 +13,66 @@
 uint8_t ble_addr_type;
 void ble_app_scan();
 
+int get_attr(uint16_t conn_handle, const struct ble_gatt_error *error, struct ble_gatt_attr *attr, void *arg)
+{
+    if(error->status == 0)
+    {
+        ESP_LOGI("CHAR","got char value %.*s", attr->om->om_len, attr->om->om_data);
+    }
+    return error->status;
+}
+
+int get_all_chars(uint16_t conn_handle, const struct ble_gatt_error *error,
+                            const struct ble_gatt_chr *chr, void *arg)
+{
+    static uint16_t attr_handler;
+    char buffer[50];
+    switch(error->status)
+    {
+    case BLE_HS_EDONE:
+        ble_gattc_read(conn_handle, attr_handler, get_attr, NULL);
+        break;
+    case 0:
+        memset(buffer, 0, sizeof(buffer));
+        ble_uuid_to_str(&chr->uuid.u, buffer);
+        ESP_LOGI("CHAR", "Characteristic %s", buffer);
+        if(strcmp(buffer,"0x2a29")==0)
+        {
+            attr_handler = chr->val_handle;
+        }
+        break;
+    default:
+        break;
+    }
+    return error->status;
+}
+
+int service_discover(uint16_t conn_handle, const struct ble_gatt_error *error,
+                                 const struct ble_gatt_svc *service, void *arg)
+{
+    static uint16_t start, end;
+    char buffer[50];
+    switch(error->status)
+    {
+    case BLE_HS_EDONE:
+        ble_gattc_disc_all_chrs(conn_handle, start, end, get_all_chars, NULL);
+        break;
+    case 0:
+        memset(buffer, 0, sizeof(buffer));
+        ble_uuid_to_str(&service->uuid.u, buffer);
+        ESP_LOGI("SERVICE", "Service %s", buffer);
+        if(strcmp(buffer,"0x180a")==0)
+        {
+            start = service->start_handle;
+            end = service->end_handle;
+        }
+        break;
+    default:
+        break;
+    }
+    return error->status;
+}
+
 static int ble_gap_event (struct ble_gap_event *event, void *arg)
 {
     struct ble_hs_adv_fields fields;
@@ -33,7 +93,7 @@ static int ble_gap_event (struct ble_gap_event *event, void *arg)
         ESP_LOGI("GAP", "BLE_GAP_EVENT_CONNECT %s", event->connect.status == 0 ? "OK" : "Failed");
         if(event->connect.status == 0)
         {
-
+            ble_gattc_disc_all_svcs(event->connect.conn_handle, service_discover, NULL);
         }
         break;
     case BLE_GAP_EVENT_DISCONNECT:
