@@ -10,13 +10,19 @@
 
 
 #define DEVICE_NAME "Maja BLE DEVICE"
+uint8_t ble_addr_type;
+void ble_app_advertise();
+
+static TimerHandle_t timer_handler;
+uint16_t batt_char_att_hdl;
+uint16_t conn_hdl;
+
 #define DEVICE_INFO_SERVICE 0x180A
 #define MANUFACTURER_NAME 0x2A29
 #define BATTERY_SERVICE 0X180F
 #define BATTERY_LEVEL_CHAR 0x2A19
+#define BATTERY_CHAR_CONFIG_DESC 0x2902
 
-uint8_t ble_addr_type;
-void ble_app_advertise();
 
 static int device_write(uint16_t cann_handle, uint16_t attr_handle,
                         struct ble_gatt_access_ctxt *ctxt, void *arg) {
@@ -34,6 +40,25 @@ static int battery_read(uint16_t cann_handle, uint16_t attr_handle,
   os_mbuf_append(ctxt->om, &battery_level, sizeof(battery_level));
   return 0;
 }
+
+uint8_t config[2] = {0x01, 0x00};
+static int battery_descriptor(uint16_t cann_handle, uint16_t attr_handle,
+                       struct ble_gatt_access_ctxt *ctxt, void *arg) {
+          if(ctxt->op == BLE_GATT_ACCESS_OP_READ_DSC){
+            os_mbuf_append(ctxt->om, &config, sizeof(config));
+          }
+          else{
+            memcpy(config, ctxt->om->om_data, ctxt->om->om_len);
+          }
+          if(config[0] == 0x01){
+            xTimerStart(timer_handler, 0);
+
+          }else{
+            xTimerStop(timer_handler, 0);
+          }
+          return 0;
+}
+
 
 
 static const struct ble_gatt_svc_def gat_svcs[] = {
@@ -61,8 +86,21 @@ static const struct ble_gatt_svc_def gat_svcs[] = {
         .characteristics =
             (struct ble_gatt_chr_def[]){
                 {.uuid = BLE_UUID16_DECLARE(BATTERY_LEVEL_CHAR),
-                 .flags = BLE_GATT_CHR_F_READ,
-                 .access_cb = battery_read},
+                 .flags = BLE_GATT_CHR_F_READ | BLE_GATT_CHR_F_NOTIFY,
+                 .val_handle = &batt_char_att_hdl,
+                 .access_cb = battery_read,
+                 .descriptors = (struct ble_gatt_dsc_def[]){
+                  {
+
+                     .uuid = BLE_UUID16_DECLARE(BATTERY_CHAR_CONFIG_DESC),
+                     .att_flags = BLE_GATT_CHR_F_WRITE | BLE_GATT_CHR_F_READ,
+                     .access_cb = battery_descriptor,
+
+                  },
+                  {0}
+                 }
+                 
+                 },
 
                 {0}}
 
@@ -78,6 +116,7 @@ static int ble_gap_event(struct ble_gap_event *event, void *arg) {
     if (event->connect.status != 0) {
       ble_app_advertise();
     }
+    conn_hdl = event->connect.conn_handle;
     break;
   case BLE_GAP_EVENT_DISCONNECT:
     ESP_LOGI("GAP", "BLE_GAP_EVENT_DISCONNECT");
@@ -89,6 +128,10 @@ static int ble_gap_event(struct ble_gap_event *event, void *arg) {
     break;
   case BLE_GAP_EVENT_SUBSCRIBE:
     ESP_LOGI("GAP", "BLE_GAP_EVENT_SUBSCRIBE");
+    if(event->subscribe.attr_handle == batt_char_att_hdl){
+        xTimerStart(timer_handler, 0);
+    }
+    
     break;
   default:
     break;
@@ -125,6 +168,15 @@ void ble_app_on_sync(void) {
 }
 
 void host_task(void *params) { nimble_port_run(); }
+uint8_t battery_level = 100;
+void update_batter_status(){
+    if(battery_level-- == 0){
+      battery_level = 100;
+    }
+    printf("notify battery level is %d\n", battery_level);
+    struct os_mbuf *om = ble_hs_mbuf_from_flat(&battery_level, sizeof(battery_level));
+    ble_gattc_notify_custom(conn_hdl, batt_char_att_hdl, om);
+}
 
 void app_main(void) {
   nvs_flash_init();
@@ -139,6 +191,8 @@ void app_main(void) {
 
   ble_gatts_add_svcs(gat_svcs);
 
+   timer_handler = xTimerCreate("update_batter_status", pdMS_TO_TICKS(1000), pdTRUE, NULL, update_batter_status);
+   
   ble_hs_cfg.sync_cb = ble_app_on_sync;
   nimble_port_freertos_init(host_task);
 }
