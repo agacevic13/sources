@@ -22,7 +22,11 @@
         "task.h": "c",
         "esp_wifi.h": "c",
         "exception": "cpp",
-        "ble_svc_gatt.h": "c"
+        "ble_svc_gatt.h": "c",
+        "wifi_connect.h": "c",
+        "freertos.h": "c",
+        "ble_svc_gap.h": "c",
+        "ble_wifi.h": "c"
     }
 
 }
