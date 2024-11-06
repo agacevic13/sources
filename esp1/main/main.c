@@ -30,7 +30,7 @@
 #define BT_RC_CT_TAG          "RC_CT"
 
 /* device name */
-#define TARGET_DEVICE_NAME    "ESP_SPEAKER"
+#define TARGET_DEVICE_NAME    "JBL TUNE520BT"
 #define LOCAL_DEVICE_NAME     "ESP_A2DP_SRC"
 
 /* AVRCP used transaction label */
@@ -102,7 +102,7 @@ static void bt_app_av_state_disconnecting_hdlr(uint16_t event, void *param);
  * STATIC VARIABLE DEFINITIONS
  ********************************/
 
-static esp_bd_addr_t s_peer_bda = {0};                        /* Bluetooth Device Address of peer device*/
+static esp_bd_addr_t s_peer_bda = {0x74, 0x2a, 0x8a, 0xf9, 0xf4, 0xa1};//{0x41, 0x77, 0xB4, 0x2C, 0x18, 0xF2};       //74:2a:8a:f9:f4:a1                  /* Bluetooth Device Address of peer device*/
 static uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];  /* Bluetooth Device Name of peer device*/
 static int s_a2d_state = APP_AV_STATE_IDLE;                   /* A2DP global state */
 static int s_media_state = APP_AV_MEDIA_STATE_IDLE;           /* sub states of APP_AV_STATE_CONNECTED */
@@ -191,11 +191,12 @@ static void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param)
     }
 
     /* search for device with MAJOR service class as "rendering" in COD */
+    ESP_LOGW("TRACK", "gets here");
     if (!esp_bt_gap_is_valid_cod(cod) ||
             !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_RENDERING)) {
         return;
     }
-
+    ESP_LOGW("TRACK", "gets here");
     /* search for target device in its Extended Inqury Response */
     if (eir) {
         get_name_from_eir(eir, s_peer_bdname, NULL);
@@ -206,6 +207,7 @@ static void filter_inquiry_scan_result(esp_bt_gap_cb_param_t *param)
             ESP_LOGI(BT_AV_TAG, "Cancel device discovery ...");
             esp_bt_gap_cancel_discovery();
         }
+        ESP_LOGW("TRACK", "gets here");
     }
 }
 

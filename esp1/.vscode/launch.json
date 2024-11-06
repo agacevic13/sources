@@ -9,7 +9,7 @@
     {
       "type": "espidf",
       "name": "Launch",
-      "request": "launch"bla
+      "request": "launch"
     }
   ]
 }

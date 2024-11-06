@@ -17,7 +17,7 @@
     "idf.toolsPathWin": "c:\\Users\\Korisnik\\Desktop\\01_POSAO\\esp\\tools",
     "idf.enableCCache": true,
     "idf.flashType": "UART",
-    "files.associations": { blabla
+    "files.associations": { 
         "timers.h": "c",
         "task.h": "c",
         "esp_wifi.h": "c",
