@@ -5,7 +5,7 @@ def wav_to_c_array(wav_file):
     with open(wav_file, "rb") as f:
         data = f.read()
 
-    half_data = data[:len(data) // 2]
+    half_data = data[:len(data) // 4]
 
     c_array = "const uint8_t wav_data[] = {"
     for i in range(0, len(half_data), 16):

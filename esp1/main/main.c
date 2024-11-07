@@ -24,6 +24,9 @@
 #include "esp_gap_bt_api.h"
 #include "esp_a2dp_api.h"
 #include "esp_avrc_api.h"
+#include "music1.h"
+
+//#include "song1.h"
 
 /* log tags */
 #define BT_AV_TAG             "BT_AV"
@@ -102,7 +105,7 @@ static void bt_app_av_state_disconnecting_hdlr(uint16_t event, void *param);
  * STATIC VARIABLE DEFINITIONS
  ********************************/
 
-static esp_bd_addr_t s_peer_bda = {0x74, 0x2a, 0x8a, 0xf9, 0xf4, 0xa1};//{0x41, 0x77, 0xB4, 0x2C, 0x18, 0xF2};       //74:2a:8a:f9:f4:a1                  /* Bluetooth Device Address of peer device*/
+static esp_bd_addr_t s_peer_bda = {0x9c,0xb1,0xdc,0x43,0x1b,0x5d};//{0x74, 0x2a, 0x8a, 0xf9, 0xf4, 0xa1}; /* Bluetooth Device Address of peer device*/
 static uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];  /* Bluetooth Device Name of peer device*/
 static int s_a2d_state = APP_AV_STATE_IDLE;                   /* A2DP global state */
 static int s_media_state = APP_AV_MEDIA_STATE_IDLE;           /* sub states of APP_AV_STATE_CONNECTED */
@@ -358,37 +361,32 @@ static void bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)
     bt_app_work_dispatch(bt_app_av_sm_hdlr, event, param, sizeof(esp_a2d_cb_param_t), NULL);
 }
 
+//static size_t audio_pos = 0;
+//static const uint8_t *audio_data_ptr = wav_data;
 /* generate some random noise to simulate source audio */
 static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 {
-    if (data == NULL || len < 0) {
-        return 0;
-    }
+	//nop
+	static int32_t music_pointer = 0;
+	if (len < 0 || data == NULL) {
+		return 0;
+	}
 
-    int16_t *p_buf = (int16_t *)data;
-    for (int i = 0; i < (len >> 1); i++) {
-        p_buf[i] = rand() % (1 << 16);
-    }
+	for (int i = 0; i < (len >> 1); i++) {
+		// decrease volume
+		uint16_t val = music[music_pointer] * 0.5;
 
-    return len;
+		// convert to bytesf
+		data[(i << 1) ] = val & 0xff;
+		data[(i << 1) + 1] = (val >> 8) & 0xff;
 
-#if 0
-/* Use a raw byte array audio input */
-static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len, const int16_t *raw_audio_input, int32_t raw_len)
-{
-    if (data == NULL || len < 0 || raw_audio_input == NULL || raw_len <= 0) {
-        return 0;
-    }
+		// loop through music
+		music_pointer = (music_pointer +1) % MUSIC_LEN;
+	}
 
-    // Determine the number of samples to copy based on the provided length
-    int32_t samples_to_copy = (len < raw_len) ? (len / sizeof(int16_t)) : (raw_len / sizeof(int16_t));
+	return len;
     
-    // Copy the raw audio input to the provided data buffer
-    memcpy(data, raw_audio_input, samples_to_copy * sizeof(int16_t));
 
-    return samples_to_copy * sizeof(int16_t); // Return the actual length of data written
-}
-#endif
 }
 
 static void bt_app_a2d_heart_beat(TimerHandle_t arg)
