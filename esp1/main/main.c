@@ -368,6 +368,8 @@ static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 {
 	//nop
 	static int32_t music_pointer = 0;
+    static bool shouldIncrement = false;
+
 	if (len < 0 || data == NULL) {
 		return 0;
 	}
@@ -381,7 +383,13 @@ static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 		data[(i << 1) + 1] = (val >> 8) & 0xff;
 
 		// loop through music
-		music_pointer = (music_pointer +1) % MUSIC_LEN;
+        if (shouldIncrement) {
+    		music_pointer = (music_pointer +1) % MUSIC_LEN;
+            shouldIncrement = false;
+        }
+        else {
+            shouldIncrement = true;
+        }
 	}
 
 	return len;
