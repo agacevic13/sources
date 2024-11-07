@@ -3,7 +3,6 @@
  *
  * SPDX-License-Identifier: Unlicense OR CC0-1.0
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -24,7 +23,7 @@
 #include "esp_gap_bt_api.h"
 #include "esp_a2dp_api.h"
 #include "esp_avrc_api.h"
-#include "music1.h"
+#include "song.h"
 
 //#include "song1.h"
 
@@ -39,6 +38,8 @@
 /* AVRCP used transaction label */
 #define APP_RC_CT_TL_GET_CAPS            (0)
 #define APP_RC_CT_TL_RN_VOLUME_CHANGE    (1)
+extern uint8_t wav_data[];
+extern size_t wav_data_size;
 
 enum {
     BT_APP_STACK_UP_EVT   = 0x0000,    /* event for stack up */
@@ -105,7 +106,7 @@ static void bt_app_av_state_disconnecting_hdlr(uint16_t event, void *param);
  * STATIC VARIABLE DEFINITIONS
  ********************************/
 
-static esp_bd_addr_t s_peer_bda = {0x9c,0xb1,0xdc,0x43,0x1b,0x5d};//{0x74, 0x2a, 0x8a, 0xf9, 0xf4, 0xa1}; /* Bluetooth Device Address of peer device*/
+static esp_bd_addr_t s_peer_bda = {0x9c,0xb1,0xdc,0x43,0x1b,0x5d};//{0x41, 0x77, 0xB4, 0x2C, 0x18, 0xF2};       //74:2a:8a:f9:f4:a1                  /* Bluetooth Device Address of peer device*/
 static uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];  /* Bluetooth Device Name of peer device*/
 static int s_a2d_state = APP_AV_STATE_IDLE;                   /* A2DP global state */
 static int s_media_state = APP_AV_MEDIA_STATE_IDLE;           /* sub states of APP_AV_STATE_CONNECTED */
@@ -368,19 +369,33 @@ static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 {
 	//nop
 	static int32_t music_pointer = 0;
-    static bool shouldIncrement = false;
-
 	if (len < 0 || data == NULL) {
 		return 0;
 	}
 
-	for (int i = 0; i < (len >> 1); i++) {
+	for (int i = 0; i < (len / 2); i++) {
 		// decrease volume
 		uint16_t val = music[music_pointer] * 0.5;
 
-		// convert to bytesf
-		data[(i << 1) ] = val & 0xff;
-		data[(i << 1) + 1] = (val >> 8) & 0xff;
+		// convert to bytes
+		data[(i * 2) ] = val & 0xff;
+		data[(i * 2) + 1] = (val >> 8) & 0xff;
+
+		// loop through music
+		music_pointer = (music_pointer +1) % MUSIC_LEN;
+	}
+
+	return len;
+
+
+
+#if 0
+/* Use a raw byte array audio input */
+static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len, const int16_t *raw_audio_input, int32_t raw_len)
+{
+    if (data == NULL || len < 0 || raw_audio_input == NULL || raw_len <= 0) {
+        return 0;
+    }
 
 		// loop through music
         if (shouldIncrement) {
@@ -395,6 +410,8 @@ static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 	return len;
     
 
+}
+#endif
 }
 
 static void bt_app_a2d_heart_beat(TimerHandle_t arg)
@@ -814,7 +831,7 @@ void app_main(void)
     esp_bt_pin_type_t pin_type = ESP_BT_PIN_TYPE_VARIABLE;
     esp_bt_pin_code_t pin_code;
     esp_bt_gap_set_pin(pin_type, 0, pin_code);
-
+    
     ESP_LOGI(BT_AV_TAG, "Own address:[%s]", bda2str((uint8_t *)esp_bt_dev_get_address(), bda_str, sizeof(bda_str)));
     bt_app_task_start_up();
     /* Bluetooth device name, connection mode and profile set up */
