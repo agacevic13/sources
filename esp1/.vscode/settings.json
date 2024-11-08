@@ -60,7 +60,9 @@
         "new": "cpp",
         "stdexcept": "cpp",
         "ratio": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "esp_log.h": "c"
     }
 
 }
+
