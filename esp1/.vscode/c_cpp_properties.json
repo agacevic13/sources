@@ -8,6 +8,7 @@
                 "${config:idf.espIdfPath}/components/**",
                 "${workspaceFolder}/build/config",
                 "${config:idf.espIdfPathWin}/components/**",
+                "&{config:idf.espIdfPathWin}/components/wifi_connect",
                 "${workspaceFolder}/**"
             ],
             "browse": {

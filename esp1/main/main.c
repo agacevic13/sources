@@ -24,7 +24,7 @@
 #include "esp_a2dp_api.h"
 #include "esp_avrc_api.h"
 #include "song.h"
-
+#include "wifi_connect.h"
 //#include "song1.h"
 
 /* log tags */
