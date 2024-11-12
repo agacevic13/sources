@@ -1,3 +1,3 @@
-idf_component_register(SRCS "bt_app_core.c"
-                            "main.c"
+idf_component_register(SRCS "wifi_connect.c"
+                            "text.c"
                     INCLUDE_DIRS ".")

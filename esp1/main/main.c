@@ -16,6 +16,8 @@
 #include "nvs_flash.h"
 #include "esp_system.h"
 #include "esp_log.h"
+#include "esp_http_client.h"
+
 
 #include "esp_bt.h"
 #include "bt_app_core.h"
@@ -24,14 +26,14 @@
 #include "esp_gap_bt_api.h"
 #include "esp_a2dp_api.h"
 #include "esp_avrc_api.h"
+#include "wifi_connect.h"
 #include "music1.h"
 
-//#include "song1.h"
 
 /* log tags */
 #define BT_AV_TAG             "BT_AV"
 #define BT_RC_CT_TAG          "RC_CT"
-
+#define HTTP_TAG              "HTTP"
 /* device name */
 #define TARGET_DEVICE_NAME    "JBL TUNE520BT"
 #define LOCAL_DEVICE_NAME     "ESP_A2DP_SRC"
@@ -105,7 +107,7 @@ static void bt_app_av_state_disconnecting_hdlr(uint16_t event, void *param);
  * STATIC VARIABLE DEFINITIONS
  ********************************/
 
-static esp_bd_addr_t s_peer_bda = {0x9c,0xb1,0xdc,0x43,0x1b,0x5d};//{0x74, 0x2a, 0x8a, 0xf9, 0xf4, 0xa1}; /* Bluetooth Device Address of peer device*/
+static esp_bd_addr_t s_peer_bda = {0x74, 0x2a, 0x8a, 0xf9, 0xf4, 0xa1}; //{0x9c,0xb1,0xdc,0x43,0x1b,0x5d}; /* Bluetooth Device Address of peer device*/
 static uint8_t s_peer_bdname[ESP_BT_GAP_MAX_BDNAME_LEN + 1];  /* Bluetooth Device Name of peer device*/
 static int s_a2d_state = APP_AV_STATE_IDLE;                   /* A2DP global state */
 static int s_media_state = APP_AV_MEDIA_STATE_IDLE;           /* sub states of APP_AV_STATE_CONNECTED */
@@ -364,10 +366,10 @@ static void bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)
 //static size_t audio_pos = 0;
 //static const uint8_t *audio_data_ptr = wav_data;
 /* generate some random noise to simulate source audio */
+static int32_t music_pointer = 0;
 static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 {
 	//nop
-	static int32_t music_pointer = 0;
     static bool shouldIncrement = false;
 
 	if (len < 0 || data == NULL) {
@@ -393,9 +395,8 @@ static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 	}
 
 	return len;
-    
-
 }
+
 
 static void bt_app_a2d_heart_beat(TimerHandle_t arg)
 {
@@ -770,6 +771,11 @@ void app_main(void)
     }
     ESP_ERROR_CHECK(ret);
 
+    //connect to wifi 
+    wifi_connect_init();
+    wifi_connect_sta("mreza2", "internet2", 1000);
+
+#if 0
     /*
      * This example only uses the functions of Classical Bluetooth.
      * So release the controller memory for Bluetooth Low Energy.
@@ -819,4 +825,5 @@ void app_main(void)
     bt_app_task_start_up();
     /* Bluetooth device name, connection mode and profile set up */
     bt_app_work_dispatch(bt_av_hdl_stack_evt, BT_APP_STACK_UP_EVT, NULL, 0, NULL);
+#endif
 }
