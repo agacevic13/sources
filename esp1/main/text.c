@@ -29,10 +29,11 @@ typedef struct song_buffer_t
 uint8_t currentBuffer = 0;
 song_buffer_t song_buffer = {0};
 SemaphoreHandle_t buffer_ready[2];
-TaskHandle_t processing_buffer_handle = NULL;
+TaskHandle_t processing_buffer_handle;
 
 esp_err_t http_handler(esp_http_client_event_t *evt)
 {
+
     switch(evt->event_id)
     {
     case HTTP_EVENT_ON_CONNECTED:
@@ -43,7 +44,15 @@ esp_err_t http_handler(esp_http_client_event_t *evt)
     case HTTP_EVENT_ON_DATA:
     {
         ESP_LOGW(HTTP_TAG, "Lenght: %d", evt->data_len);
-        song_buffer_t *song_buffer = evt->user_data;
+        // if (evt->user_data) 
+        // {
+        //     song_buffer_t *song_buffer = evt->user_data;
+        // } 
+        // else 
+        // {
+        //     ESP_LOGW(HTTP_TAG, "user_data is NULL");
+        // }
+         song_buffer_t *song_buffer = evt->user_data;
 
         uint32_t data_written = 0;
         while(data_written < evt->data_len)
@@ -71,7 +80,7 @@ esp_err_t http_handler(esp_http_client_event_t *evt)
                 {
                     song_buffer->buffer_index = 0;
 
-                    xTaskNotifyGive(processing_buffer_handle);
+                    ESP_ERROR_CHECK(xTaskNotifyGive(processing_buffer_handle));
                     currentBuffer = (currentBuffer + 1) % 2;
                 }
                 //vTaskDelay(1000 /portTICK_PERIOD_MS);
@@ -92,46 +101,60 @@ esp_err_t http_handler(esp_http_client_event_t *evt)
 
 void get_song()
 {
-    esp_http_client_config_t esp_http_client_config = {
-        .url = "http://radio-esp32.000.pe/CMakeLists.txt",
-        .method = HTTP_METHOD_GET,
-        .event_handler = http_handler,
-        .user_data = &song_buffer,
-        .buffer_size = BUFFER_SIZE,
-        .timeout_ms = 1000,
-    };
-
-    esp_err_t err = ESP_OK;
-    esp_http_client_handle_t client = esp_http_client_init(&esp_http_client_config);
-    if(xSemaphoreTake(buffer_ready[currentBuffer], portMAX_DELAY) == pdTRUE)
+    int download_start = 0;
+    char range[50]={0};
+    while(1)
     {
-        err = esp_http_client_perform(client);
-    }
+        esp_http_client_config_t esp_http_client_config = {
+            .url = "http://radio-esp32.000.pe/CMakeLists.txt",
+            .method = HTTP_METHOD_GET,
+            .event_handler = http_handler,
+            .user_data = &song_buffer,
+            .buffer_size = BUFFER_SIZE,
+            .timeout_ms = 1000,
+        };
+
+        sprintf(range, "bytes=%d-%d", download_start, download_start + BUFFER_SIZE - 1);
+
+        esp_err_t err = ESP_OK;
+        esp_http_client_handle_t client = esp_http_client_init(&esp_http_client_config);
+        esp_http_client_set_header(client, "Range", range);
+        if(xSemaphoreTake(buffer_ready[currentBuffer], portMAX_DELAY) == pdTRUE)
+        {
+            err = esp_http_client_perform(client);
+        }
 
 
-    if(err == ESP_OK)
-    {
-        ESP_LOGI(HTTP_TAG, "GET status = %d, result = %s\n",esp_http_client_get_status_code(client), song_buffer.buffer[0]);
-        ESP_LOGI(HTTP_TAG, "GET status = %d, result = %s\n",esp_http_client_get_status_code(client), song_buffer.buffer[1]);
-    }
-    else{
-        ESP_LOGI(HTTP_TAG, "GET request failed: %s\n", esp_err_to_name(err));
-    }
+        if(err == ESP_OK)
+        {
+            ESP_LOGI(HTTP_TAG, "GET status = %d, result = %s\n",esp_http_client_get_status_code(client), song_buffer.buffer[0]);
+            ESP_LOGI(HTTP_TAG, "GET status = %d, result = %s\n",esp_http_client_get_status_code(client), song_buffer.buffer[1]);
+        }
+        else{
+            ESP_LOGI(HTTP_TAG, "GET request failed: %s\n", esp_err_to_name(err));
+        }
 
-    esp_http_client_cleanup(client);
+        esp_http_client_cleanup(client);
+        download_start += BUFFER_SIZE;
+        // if(evt->data_len < BUFFER_SIZE) 
+        // {
+        // ESP_LOGI(HTTP_TAG, "Download complete. Received %d bytes, ending download.", evt->data_len);
+        // break;
+        // }
+    }
 }
 
 void processing_buffer(void * params)
 {
     while(1) 
     {
-    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-    
-    int processBuffer = (currentBuffer + 1) % 2;
-    ESP_LOGI(HTTP_TAG, "Processing buffer %d...", processBuffer);
-    // funct here
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        
+        int processBuffer = (currentBuffer + 1) % 2;
+        ESP_LOGI(HTTP_TAG, "Processing buffer %d...", processBuffer);
+        // funct here
 
-    xSemaphoreGive(buffer_ready[processBuffer]);
+        xSemaphoreGive(buffer_ready[processBuffer]);
     }
 }
 
@@ -151,8 +174,13 @@ void app_main(void)
     wifi_connect_sta("Sources", "internet21", 1000);
     vTaskDelay(3000 / portTICK_PERIOD_MS);
     
-    song_buffer.buffer[0] = calloc(BUFFER_SIZE, 1);
+    song_buffer.buffer[0] =calloc(BUFFER_SIZE, 1);
     song_buffer.buffer[1] = calloc(BUFFER_SIZE, 1);
+    if (song_buffer.buffer[0] == NULL || song_buffer.buffer[1] == NULL) 
+    {
+        ESP_LOGE(HTTP_TAG, "Memory allocation failed for song buffer.\n");
+        return;  
+    }
     buffer_ready[0] = xSemaphoreCreateBinary();
     buffer_ready[1] = xSemaphoreCreateBinary();
 
