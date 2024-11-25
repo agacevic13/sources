@@ -4,3 +4,13 @@ esp1/build/
 esp1/managed_components/espressif__led_strip/
 
 .vscode/
+
+esp-adf-primjer/main/CMakeLists.txt
+
+esp-adf-primjer/.devcontainer/devcontainer.json
+
+esp-adf-primjer/.devcontainer/
+
+radio_example_mp3/ESP32_MP3_Decoder
+
+esp-adf-primjer/
