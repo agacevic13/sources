@@ -1,3 +1,2 @@
-set(COMPONENT_SRCS "play_sdcard_music_example.c")
-set(COMPONENT_ADD_INCLUDEDIRS .)
-register_component()
+idf_component_register(SRCS  "main.c" "wifi_connect.c"
+                          INCLUDE_DIRS ".")

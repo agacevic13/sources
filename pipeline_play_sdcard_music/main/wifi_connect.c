@@ -6,6 +6,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 
+
+
 static esp_netif_t *esp_netif;
 static char *TAG = "WIFI CONNECT";
 static EventGroupHandle_t wifi_events;
@@ -56,16 +58,23 @@ void wifi_connect_init(void)
 esp_err_t wifi_connect_sta(char* ssid, char* pass, int timeout)
 {
     wifi_events = xEventGroupCreate();
-
+    
     esp_netif = esp_netif_create_default_wifi_sta();
+    
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+   
     wifi_config_t wifi_config = {};
-    strncpy((char *)wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid)-1);
-    strncpy((char *)wifi_config.sta.password, pass, sizeof(wifi_config.sta.password)-1);
-    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
-    ESP_ERROR_CHECK(esp_wifi_start());
+    
 
-    EventBits_t result = xEventGroupWaitBits(wifi_events, CONNECTED | DISCONNECTED, true, false, pdMS_TO_TICKS(timeout));
+    strncpy((char *)wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid)-1);
+   
+    strncpy((char *)wifi_config.sta.password, pass, sizeof(wifi_config.sta.password)-1);
+    
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
+    
+    ESP_ERROR_CHECK(esp_wifi_start());
+   
+    EventBits_t result = xEventGroupWaitBits(wifi_events, CONNECTED | DISCONNECTED, true, false, pdMS_TO_TICKS(timeout * 2));
     if(result == CONNECTED) return ESP_OK;
-    return ESP_FAIL;
+        return ESP_FAIL;
 }

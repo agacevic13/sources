@@ -1,6 +1,6 @@
 #ifndef _TEXT_H_
 #define _TEXT_H_
-#endif
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,4 +15,8 @@
 #include "esp_system.h"
 #include "esp_log.h"
 
-extern void download_song(void);
+extern void download_file(void);
+
+
+
+#endif

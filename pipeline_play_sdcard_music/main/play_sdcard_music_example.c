@@ -15,7 +15,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "i2s_stream.h"
-#include "nvs_flash.h"
 #include "sdkconfig.h"
 #include <string.h>
 
@@ -23,6 +22,7 @@
 #include "esp_vfs.h"
 #include "esp_vfs_fat.h"
 #include "spiffs_stream.h"
+#include "text.h"
 #include <sys/stat.h> // Za funkciju stat
 
 #ifdef CONFIG_AUDIO_SUPPORT_MP3_DECODER
@@ -120,7 +120,7 @@ esp_err_t mount_spiffs(void) {
   return ESP_OK;
 }
 
-static esp_err_t s_example_write_file(const char *path, char *data) {
+ esp_err_t s_example_write_file(const char *path, char *data) {
   ESP_LOGI(TAG, "Opening file %s", path);
   FILE *f = fopen(path, "w");
   if (f == NULL) {
@@ -134,7 +134,7 @@ static esp_err_t s_example_write_file(const char *path, char *data) {
   return ESP_OK;
 }
 
-static esp_err_t s_example_read_file(const char *path) {
+ esp_err_t s_example_read_file(const char *path) {
   ESP_LOGI(TAG, "Reading file %s", path);
   FILE *f = fopen(path, "r");
   if (f == NULL) {
@@ -226,11 +226,11 @@ void app_main(void) {
   esp_log_level_set("*", ESP_LOG_WARN);
   esp_log_level_set(TAG, ESP_LOG_INFO);
 
-  ret = mount_spiffs();
-  if (ret != ESP_OK) {
-    ESP_LOGE(TAG, "Failed to mount SPIFFS");
-    return;
-  }
+  // ret = mount_spiffs();
+  // if (ret != ESP_OK) {
+  //   ESP_LOGE(TAG, "Failed to mount SPIFFS");
+  //   return;
+  // }
 
   ESP_LOGI(TAG, "[ 1 ] Mount sdcard");
   // Initialize peripherals management
@@ -239,14 +239,14 @@ void app_main(void) {
   // Initialize SD Card peripheral
   audio_board_sdcard_init(set, SD_MODE_1_LINE);
 
-  const char *file_hello = "/sdcard/file.mp3";
+  //const char *file_hello = "/sdcard/file.mp3";
 
-  char data[EXAMPLE_MAX_CHAR_SIZE];
-  snprintf(data, EXAMPLE_MAX_CHAR_SIZE, "%s!\n", "Hello");
-  ret = s_example_write_file(file_hello, data);
-  if (ret != ESP_OK) {
-    return;
-  }
+  // char data[EXAMPLE_MAX_CHAR_SIZE];
+  // snprintf(data, EXAMPLE_MAX_CHAR_SIZE, "%s!\n", "Hello");
+  // ret = s_example_write_file(file_hello, data);
+  // if (ret != ESP_OK) {
+  //   return;
+  // }
 
 
 
@@ -270,7 +270,7 @@ void app_main(void) {
   // }
 
   // ESP_LOGI(TAG, "File successfully copied from SPIFFS to SD Card");
-
+  download_file();
   ESP_LOGI(TAG, "[ 2 ] Start codec chip");
 
   audio_board_handle_t board_handle = audio_board_init();
@@ -340,40 +340,40 @@ void app_main(void) {
 
 #ifdef CONFIG_AUDIO_SUPPORT_MP3_DECODER
 
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.mp3 ");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.mp3");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.mp3 ");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.mp3");
 
   // Nakon montaže SD kartice
 #elif CONFIG_AUDIO_SUPPORT_AMRNB_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /probaa.amr");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.amr");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /juznjaci.amr");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.amr");
 #elif CONFIG_AUDIO_SUPPORT_AMRWB_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.Wamr");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.Wamr");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.Wamr");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.Wamr");
 #elif CONFIG_AUDIO_SUPPORT_OPUS_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.opus");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.opus");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.opus");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.opus");
 #elif CONFIG_AUDIO_SUPPORT_OGG_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.ogg");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.ogg");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.ogg");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.ogg");
 #elif CONFIG_AUDIO_SUPPORT_FLAC_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.flac");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.flac");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.flac");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.flac");
 #elif CONFIG_AUDIO_SUPPORT_WAV_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.wav");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.wav");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.wav");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.wav");
 #elif CONFIG_AUDIO_SUPPORT_AAC_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.aac");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.aac");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.aac");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.aac");
 #elif CONFIG_AUDIO_SUPPORT_M4A_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.m4a");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.m4a");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.m4a");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.m4a");
 #elif CONFIG_AUDIO_SUPPORT_TS_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.ts");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.ts");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.ts");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.ts");
 #elif CONFIG_AUDIO_SUPPORT_MP4_DECODER
-  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/probaa.mp4");
-  audio_element_set_uri(fatfs_stream_reader, "/sdcard/probaa.mp4");
+  ESP_LOGI(TAG, "[3.6] Set up uri: /sdcard/juznjaci.mp4");
+  audio_element_set_uri(fatfs_stream_reader, "/sdcard/juznjaci.mp4");
 #endif
 
   ESP_LOGI(TAG, "[ 4 ] Set up  event listener");
